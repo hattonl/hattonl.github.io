@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="嵌入式,系统结构,计划," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="一个梦想成为架构师的技术小白">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hatton&#39;s Notes">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="在低资源的嵌入式主控上进行内存管理 最近在做的一个嵌入式的项目中，需要使用到大量的内存空间对数据进行缓存。但是缓存的数据块大小的不确定的，最小可能只有20个字节，最多的能达到400多字节。并且有多少这样的数据包还是不确定的。查看了原本的实现方式，为每个包都分配了最大的字节数，也就是400，然而大部分的数据包都远小于这个值，这样的处理方式势必会造成大量的内存浪费，在低端嵌入式处理器上不太可行。所以，">
+<meta name="keywords" content="嵌入式,系统结构,计划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在低资源的嵌入式主控上进行内存管理">
+<meta property="og:url" content="http://yoursite.com/2018/01/21/memory-manage-on-embeded-system/index.html">
 <meta property="og:site_name" content="Hatton&#39;s Notes">
-<meta property="og:description" content="一个梦想成为架构师的技术小白">
+<meta property="og:description" content="在低资源的嵌入式主控上进行内存管理 最近在做的一个嵌入式的项目中，需要使用到大量的内存空间对数据进行缓存。但是缓存的数据块大小的不确定的，最小可能只有20个字节，最多的能达到400多字节。并且有多少这样的数据包还是不确定的。查看了原本的实现方式，为每个包都分配了最大的字节数，也就是400，然而大部分的数据包都远小于这个值，这样的处理方式势必会造成大量的内存浪费，在低端嵌入式处理器上不太可行。所以，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-02T13:21:55.171Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hatton&#39;s Notes">
-<meta name="twitter:description" content="一个梦想成为架构师的技术小白">
+<meta name="twitter:title" content="在低资源的嵌入式主控上进行内存管理">
+<meta name="twitter:description" content="在低资源的嵌入式主控上进行内存管理 最近在做的一个嵌入式的项目中，需要使用到大量的内存空间对数据进行缓存。但是缓存的数据块大小的不确定的，最小可能只有20个字节，最多的能达到400多字节。并且有多少这样的数据包还是不确定的。查看了原本的实现方式，为每个包都分配了最大的字节数，也就是400，然而大部分的数据包都远小于这个值，这样的处理方式势必会造成大量的内存浪费，在低端嵌入式处理器上不太可行。所以，">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/21/memory-manage-on-embeded-system/"/>
 
 
 
 
 
-  <title>归档 | Hatton's Notes</title>
+  <title>在低资源的嵌入式主控上进行内存管理 | Hatton's Notes</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,116 +249,184 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 2 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/21/memory-manage-on-embeded-system/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hatton.Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hatton's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/01/21/memory-manage-on-embeded-system/" itemprop="url">
+        
+          <h1 class="post-title" itemprop="name headline">在低资源的嵌入式主控上进行内存管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
               
-                <span itemprop="name">在低资源的嵌入式主控上进行内存管理</span>
+                <span class="post-meta-item-text">发表于</span>
               
-            </a>
-        
-      </h2>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T12:44:08+08:00">
+                2018-01-21
+              </time>
+            
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-21T12:44:08+08:00"
-              content="2018-01-21" >
-          01-21
-        </time>
-      </div>
+            
 
-    </header>
-  </article>
+            
+          </span>
 
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2016">2016</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/12/21/study-guide/" itemprop="url">
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">系统结构学习之内功修炼</span>
+                <span class="post-meta-item-text">分类于</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习路线/" itemprop="url" rel="index">
+                    <span itemprop="name">学习路线</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-12-21T12:44:08+08:00"
-              content="2016-12-21" >
-          12-21
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+          
 
+          
+          
 
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>在低资源的嵌入式主控上进行内存管理</p>
+<p>最近在做的一个嵌入式的项目中，需要使用到大量的内存空间对数据进行缓存。但是缓存的数据块大小的不确定的，最小可能只有20个字节，最多的能达到400多字节。并且有多少这样的数据包还是不确定的。查看了原本的实现方式，为每个包都分配了最大的字节数，也就是400，然而大部分的数据包都远小于这个值，这样的处理方式势必会造成大量的内存浪费，在低端嵌入式处理器上不太可行。所以，笔者打算实现一个动态内存分配的方法，来解决这个问题。</p>
+<a id="more"></a>
+<p>首先，来回顾一下操作系统中的知识。</p>
+<p>1.单一连续分配<br>这是最简单的一种存储管理方式，就是将整块内存直接进行分配。只能用于单用户、单任务的操作系统中。</p>
+<p>2.固定分区分配<br>    将整块内存划分为数个分区，这些分区的大小可以都相同也可以不相同。然后每次有申请者申请内存的时候，就分配其中一块可以满足申请大小的分区给申请者。固定分区式分配是最简单的一种可运行多道程序的存储管理方式。比如将内存用户空间划分为若干个固定大小的区域，在每个分区中只装入一道作业，这样，把用户空间划分为几个分区，便允许有几道作业并发运行。分区的空间可以大小都相等，也可以分区大小不等。</p>
+<p>3.动态分区分配<br>    个人认为动态分区是建立在固定分区的基础上。首先动态分区也需要将整个内存划分为数个分区都进行分配。与固定分区分配不同的是，在分配分区时，不会将整个分区在实现可变分区分配时，而是会将分区中多余的空间进行分割，产生一个新的空闲分区。将涉及到分区分配中所用的数据结构、分区分配算法和分区的分配与回收操作这样三个问题。其中，分配算法主要包括：首次适应算法、循环首次适应算法、最佳适应算法、最坏适应算法、快速适应算法以及伙伴系统等。</p>
+<p>4.可重定位分区分配</p>
+<pre><code>进行内存移动之后，需要进行重定位。
+程序执行时，需要硬件地址转化机构。
+</code></pre><p>内存紧凑算法</p>
+<p>离散管理</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/嵌入式/" rel="tag"># 嵌入式</a>
+          
+            <a href="/tags/系统结构/" rel="tag"># 系统结构</a>
+          
+            <a href="/tags/计划/" rel="tag"># 计划</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/21/study-guide/" rel="next" title="系统结构学习之内功修炼">
+                <i class="fa fa-chevron-left"></i> 系统结构学习之内功修炼
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -364,6 +434,8 @@
 
 
           
+  
+
 
         </div>
         
@@ -591,6 +663,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
