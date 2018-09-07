@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
+<meta name="description" content="研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
 <meta name="keywords" content="嵌入式,系统结构,FPGA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Verilog基础语法整理">
 <meta property="og:url" content="http://yoursite.com/2018/09/07/verilog-basic-grammar/index.html">
 <meta property="og:site_name" content="Hatton&#39;s Notes">
-<meta property="og:description" content="研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
+<meta property="og:description" content="研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/09/07/images/verilog-prammar.png">
-<meta property="og:updated_time" content="2018-09-07T15:13:38.805Z">
+<meta property="og:image" content="https://i.loli.net/2018/09/07/5b929bd24ada2.png">
+<meta property="og:updated_time" content="2018-09-07T15:40:23.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Verilog基础语法整理">
-<meta name="twitter:description" content="研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
-<meta name="twitter:image" content="http://yoursite.com/2018/09/07/images/verilog-prammar.png">
+<meta name="twitter:description" content="研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
+<meta name="twitter:image" content="https://i.loli.net/2018/09/07/5b929bd24ada2.png">
 
 
 
@@ -354,10 +354,10 @@
       
 
       
-        <p>研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
+        <p>研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
 <a id="more"></a>
-<p><img src="../images/verilog-prammar.png" alt="Verilog基础语法导图"></p>
-<h3 id="名词概念"><a href="#名词概念" class="headerlink" title="名词概念"></a>名词概念</h3><p><strong>EDA工具</strong>：电子设计自动化（Electronic Design Automation）的简称，是从计算机辅助设计（CAD）、计算机辅助制造（CAM）、计算机辅助测试（CAT）和计算机辅助工程（CAE）的概念发展而来的。利用EDA工具，工程师将芯片的电路设计、性能分析、设计出IC版图的整个过程交由计算机自动处理完成。</p>
+<p><img src="https://i.loli.net/2018/09/07/5b929bd24ada2.png" alt="Verilog基础语法导图"></p>
+<h1 id="名词概念"><a href="#名词概念" class="headerlink" title="名词概念"></a>名词概念</h1><p><strong>EDA工具</strong>：电子设计自动化（Electronic Design Automation）的简称，是从计算机辅助设计（CAD）、计算机辅助制造（CAM）、计算机辅助测试（CAT）和计算机辅助工程（CAE）的概念发展而来的。利用EDA工具，工程师将芯片的电路设计、性能分析、设计出IC版图的整个过程交由计算机自动处理完成。</p>
 <p><strong>软核</strong>：把功能经过验证的、可综合的、实现后电路结构总门数在5000门以上的verilog HDL模型称之为“软核”。</p>
 <p><strong>固核</strong>：把在某一种现场可编程门阵列（FPGA）器件上实现的、经验证是正确的、总门数在5000门上电路结构编码文件称为“固核”。</p>
 <p><strong>硬核</strong>：把在某一种专用集成电路工艺的（ASIC）器件上实现的、经验证是正确的、总门数在5000门以上的电路结构版图掩膜称为“硬核”。</p>
@@ -386,33 +386,28 @@
 </blockquote>
 <h2 id="内部信号声明"><a href="#内部信号声明" class="headerlink" title="内部信号声明"></a>内部信号声明</h2><p>声明在模块内用到的和端口有关的额wire和reg类型变量。</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span>[width-<span class="number">1</span>: <span class="number">0</span>] r_val_1, r_val_2, ... ;</span><br><span class="line"><span class="keyword">wire</span>[width-<span class="number">1</span>: <span class="number">0</span>] w_val_1, w_val_2, ... ;</span><br></pre></td></tr></table></figure>
-<h2 id="功能定义"><a href="#功能定义" class="headerlink" title="功能定义"></a>功能定义</h2><ol>
-<li>用“assign”声明语句 </li>
-</ol>
+<h2 id="功能定义"><a href="#功能定义" class="headerlink" title="功能定义"></a>功能定义</h2><p>用“assign”声明语句 </p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> a = b &amp; c **<span class="number">2</span>）</span><br></pre></td></tr></table></figure>
-<ol>
-<li>用实例元件</li>
-</ol>
+<p>用实例元件</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">and</span> #<span class="number">2</span> u1(q, a, b)</span><br></pre></td></tr></table></figure>
-<ol>
-<li>always块</li>
-</ol>
+<p>always块定义</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> clr)</span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (clr) q &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (en) q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>assign语句是描述组合逻辑最常用的方法之一。对assign之后不能加块，实现组合逻辑只能用逐句的使用assign。always块既可以用于描述组合逻辑，也可描述时序逻辑。always 块可用很多种描述手段来表达逻辑。按照一定的风格来编写always块，可以通过综合工具把源代码自动综合成用门级结构表示的组合或时序逻辑电路。</p>
-<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="常用数据类型"><a href="#常用数据类型" class="headerlink" title="常用数据类型"></a>常用数据类型</h2><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><h4 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h4><p>4种进制表示形式（二、八、十、十六进制）；x和z值在数字电路中的分别表示不定值和高阻值；定义负数时，减号写在数字定义表达式最前面，以补数形式表示；下划线可以用来分割数的表达以提高程序可读性。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>与其他语言相同，在Verilog中数据类型也可以分为常量与变量两大类。下面是一些常用的数据类型。</p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>4种进制表示形式（二、八、十、十六进制）；x和z值在数字电路中的分别表示不定值和高阻值；定义负数时，减号写在数字定义表达式最前面，以补数形式表示；下划线可以用来分割数的表达以提高程序可读性。</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8'b10101100</span>   <span class="comment">//&lt;位宽&gt;&lt;进制&gt;&lt;数字&gt;</span></span><br><span class="line"><span class="number">8'ha2</span></span><br><span class="line"><span class="number">4'b10x0</span></span><br><span class="line"><span class="number">12'dz</span></span><br><span class="line">-<span class="number">8'd5</span></span><br><span class="line"><span class="number">16'b1010_1011_1111_1010</span></span><br></pre></td></tr></table></figure>
-<h4 id="parameter型"><a href="#parameter型" class="headerlink" title="parameter型"></a>parameter型</h4><p>使用parameter来定义一个常量标识符，可以提高程序的可读性和可维护性。parameter型数据和C语言中使用const修饰的变量很相像，不过在模块或实例引用时，可通过参数传递改变被引用模块或实例中已定义的参数。同样，可以使用defparam命令，在一个模块中改变另一个模块的参数。</p>
+<h3 id="parameter型"><a href="#parameter型" class="headerlink" title="parameter型"></a>parameter型</h3><p>使用parameter来定义一个常量标识符，可以提高程序的可读性和可维护性。parameter型数据和C语言中使用const修饰的变量很相像，不过在模块或实例引用时，可通过参数传递改变被引用模块或实例中已定义的参数。同样，可以使用defparam命令，在一个模块中改变另一个模块的参数。</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">parameter</span> msb = <span class="number">7</span>;</span><br><span class="line"><span class="keyword">parameter</span> byte_size = <span class="number">8</span>, byte_msb = byte_size - <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>在程序运行过程中其值可以改变的量。</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>在程序运行过程中其值可以改变的量。</p>
 <p>网络数据类型：表示结构实体（如：门）之间的物理连接。</p>
 <p>​    不能储存值，且必须受到驱动器（如：assign）的驱动。无驱动器连接的情况下其值为高阻值。</p>
 <p>​    wire型与tri型。</p>
-<h4 id="wire"><a href="#wire" class="headerlink" title="wire"></a>wire</h4><p>wire类型是一种常用的网络数据类型。网络数据类型表示结构实体（例如门）之间的物理连接，这种类型不能存储值，而且必须受到启动器（例如门或连续赋值语句，assign）的驱动。如果没有启动器的连接，该变量就是高阻值z。</p>
+<h3 id="wire"><a href="#wire" class="headerlink" title="wire"></a>wire</h3><p>wire类型是一种常用的网络数据类型。网络数据类型表示结构实体（例如门）之间的物理连接，这种类型不能存储值，而且必须受到启动器（例如门或连续赋值语句，assign）的驱动。如果没有启动器的连接，该变量就是高阻值z。</p>
 <p>Verilog程序模块中输入、输出信号类型默认时自动定义为wire型。wire型信号可以用作任何方程式的输入，也可以用作“assign”语句或实例元件的输出。</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> [n-<span class="number">1</span>: <span class="number">0</span>] name_1, name_2, ... , name_i;</span><br></pre></td></tr></table></figure>
-<h4 id="reg"><a href="#reg" class="headerlink" title="reg"></a>reg</h4><p>存储器数据类型。通过赋值语句可以改变寄存器存储的值，其作用与改变触发器存储的值相当。默认值为不定值x。reg型数据常用来表示“always”模块内指定信号，常代表触发器。在“always”模块内被赋值的每一个信号都必须定义成reg型。</p>
+<h3 id="reg"><a href="#reg" class="headerlink" title="reg"></a>reg</h3><p>存储器数据类型。通过赋值语句可以改变寄存器存储的值，其作用与改变触发器存储的值相当。默认值为不定值x。reg型数据常用来表示“always”模块内指定信号，常代表触发器。在“always”模块内被赋值的每一个信号都必须定义成reg型。</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [n-<span class="number">1</span>: <span class="number">0</span>] name_1, name_2, ... , name_i;</span><br></pre></td></tr></table></figure>
-<h4 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h4><p>通过reg 型变量建立数组来对存储器进行建模，可以描述RAM型存储器、ROM存储器和reg文件。</p>
+<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><p>通过reg 型变量建立数组来对存储器进行建模，可以描述RAM型存储器、ROM存储器和reg文件。</p>
  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [n-<span class="number">1</span>: <span class="number">0</span>] memory_name[m-<span class="number">1</span>: <span class="number">0</span>];</span><br></pre></td></tr></table></figure>
 <h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><ol>
 <li>算术运算符（+，-，x，/，%）</li>
@@ -470,19 +465,16 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">\</td>
+<td style="text-align:center">&#124;</td>
 <td style="text-align:center"></td>
-<td></td>
 </tr>
 <tr>
 <td style="text-align:center">&amp;&amp;</td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">\</td>
-<td style="text-align:center">\</td>
-<td></td>
-<td></td>
+<td style="text-align:center">&#124;&#124;</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">? :</td>
@@ -504,7 +496,7 @@
 <p> 另外两个循环语句，while和for与在C语言中有相同的用法。上述中的statement都可以使用begin-end来组织多个语句。</p>
 <h2 id="块语句"><a href="#块语句" class="headerlink" title="块语句"></a>块语句</h2><p>语句块的作用是将多条语句合并成一组，使它们像一条语句那样。在Verilog中块语句分为两种，一种是顺序块（也称过程块，关键字begin-end），另一种为并行块（关键字begin-end）。</p>
 <p>在过程块中，语句一条接一条按顺序执行，除了带有内嵌延迟控制的非阻塞赋值语句。如果语句中包括延迟或事件控制，那么延迟总是相对于前面那条语句执行完成的仿真时间的。而在并行块中，所有语句并发执行。语句执行的顺序有个字语句内延迟或事件控制决定，且延迟或事件控制是相对于块语句开始执行的时刻而言的。</p>
-<p>块语句还具有嵌套块和命名块的特点。块的嵌套使得顺序块和并行块能够混合在一起使用。如果给块进行命名，则可以在命名块中声明局部变量，此变量可以通过层次名引用进行访问。此外，命令块可以被禁用，如停止其执行（<code>diable block_name;</code>）。</p>
+<p>块语句还具有嵌套块和命名块的特点。块的嵌套使得顺序块和并行块能够混合在一起使用。如果给块进行命名，则可以在命名块中声明局部变量，此变量可以通过层次名引用进行访问。此外，命令块可以被禁用，如停止其执行（<code>disable block_name;</code>）。</p>
 <h2 id="结构说明语句"><a href="#结构说明语句" class="headerlink" title="结构说明语句"></a>结构说明语句</h2><p>在Verilog语言中的任何过程模块都从属于一下4中结构的说明语句</p>
 <ul>
 <li>initial说明语句</li>
@@ -819,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词概念"><span class="nav-number">1.</span> <span class="nav-text">名词概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块结构"><span class="nav-number"></span> <span class="nav-text">模块结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#端口定义"><span class="nav-number"></span> <span class="nav-text">端口定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO说明"><span class="nav-number"></span> <span class="nav-text">IO说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部信号声明"><span class="nav-number"></span> <span class="nav-text">内部信号声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能定义"><span class="nav-number"></span> <span class="nav-text">功能定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number"></span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用数据类型"><span class="nav-number"></span> <span class="nav-text">常用数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常量"><span class="nav-number">1.</span> <span class="nav-text">常量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数字"><span class="nav-number">1.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parameter型"><span class="nav-number">1.2.</span> <span class="nav-text">parameter型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#wire"><span class="nav-number">2.1.</span> <span class="nav-text">wire</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reg"><span class="nav-number">2.2.</span> <span class="nav-text">reg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memory"><span class="nav-number">2.3.</span> <span class="nav-text">memory</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算符"><span class="nav-number"></span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语句"><span class="nav-number"></span> <span class="nav-text">语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值语句"><span class="nav-number"></span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件语句"><span class="nav-number"></span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环语句"><span class="nav-number"></span> <span class="nav-text">循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块语句"><span class="nav-number"></span> <span class="nav-text">块语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构说明语句"><span class="nav-number"></span> <span class="nav-text">结构说明语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#initial-和-always"><span class="nav-number">1.</span> <span class="nav-text">initial 和 always</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#task-和-function"><span class="nav-number">2.</span> <span class="nav-text">task 和 function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成语句"><span class="nav-number"></span> <span class="nav-text">生成语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用系统调用与预编译处理"><span class="nav-number"></span> <span class="nav-text">常用系统调用与预编译处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用系统调用"><span class="nav-number"></span> <span class="nav-text">常用系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预编译处理"><span class="nav-number"></span> <span class="nav-text">预编译处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考书籍"><span class="nav-number"></span> <span class="nav-text">参考书籍</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#名词概念"><span class="nav-number">1.</span> <span class="nav-text">名词概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块结构"><span class="nav-number">2.</span> <span class="nav-text">模块结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#端口定义"><span class="nav-number">2.1.</span> <span class="nav-text">端口定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO说明"><span class="nav-number">2.2.</span> <span class="nav-text">IO说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部信号声明"><span class="nav-number">2.3.</span> <span class="nav-text">内部信号声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能定义"><span class="nav-number">2.4.</span> <span class="nav-text">功能定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number">3.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常量"><span class="nav-number">3.1.</span> <span class="nav-text">常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字"><span class="nav-number">3.1.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parameter型"><span class="nav-number">3.1.2.</span> <span class="nav-text">parameter型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">3.2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#wire"><span class="nav-number">3.2.1.</span> <span class="nav-text">wire</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reg"><span class="nav-number">3.2.2.</span> <span class="nav-text">reg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memory"><span class="nav-number">3.2.3.</span> <span class="nav-text">memory</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算符"><span class="nav-number">4.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语句"><span class="nav-number">5.</span> <span class="nav-text">语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值语句"><span class="nav-number">5.1.</span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件语句"><span class="nav-number">5.2.</span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环语句"><span class="nav-number">5.3.</span> <span class="nav-text">循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块语句"><span class="nav-number">5.4.</span> <span class="nav-text">块语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构说明语句"><span class="nav-number">5.5.</span> <span class="nav-text">结构说明语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#initial-和-always"><span class="nav-number">5.5.1.</span> <span class="nav-text">initial 和 always</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#task-和-function"><span class="nav-number">5.5.2.</span> <span class="nav-text">task 和 function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成语句"><span class="nav-number">5.6.</span> <span class="nav-text">生成语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用系统调用与预编译处理"><span class="nav-number">6.</span> <span class="nav-text">常用系统调用与预编译处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用系统调用"><span class="nav-number">6.1.</span> <span class="nav-text">常用系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预编译处理"><span class="nav-number">6.2.</span> <span class="nav-text">预编译处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考书籍"><span class="nav-number">7.</span> <span class="nav-text">参考书籍</span></a></li></ol></div>
             
 
           </div>
