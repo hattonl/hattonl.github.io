@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="嵌入式,系统结构,FPGA," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
+<meta name="keywords" content="嵌入式,系统结构,FPGA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog基础语法整理">
+<meta property="og:url" content="http://yoursite.com/2018/09/07/verilog-basic-grammar/index.html">
+<meta property="og:site_name" content="Hatton&#39;s Notes">
+<meta property="og:description" content="研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/09/07/images/verilog-prammar.png">
+<meta property="og:updated_time" content="2018-09-07T15:13:38.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Verilog基础语法整理">
+<meta name="twitter:description" content="研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/07/images/verilog-prammar.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/07/verilog-basic-grammar/"/>
+
+
+
+
+
+  <title>Verilog基础语法整理 | Hatton's Notes</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hatton's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/07/verilog-basic-grammar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hatton.Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hatton's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Verilog基础语法整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T09:48:00+08:00">
+                2018-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>研究生即将进入到体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
+<a id="more"></a>
+<p><img src="../images/verilog-prammar.png" alt="Verilog基础语法导图"></p>
+<h3 id="名词概念"><a href="#名词概念" class="headerlink" title="名词概念"></a>名词概念</h3><p><strong>EDA工具</strong>：电子设计自动化（Electronic Design Automation）的简称，是从计算机辅助设计（CAD）、计算机辅助制造（CAM）、计算机辅助测试（CAT）和计算机辅助工程（CAE）的概念发展而来的。利用EDA工具，工程师将芯片的电路设计、性能分析、设计出IC版图的整个过程交由计算机自动处理完成。</p>
+<p><strong>软核</strong>：把功能经过验证的、可综合的、实现后电路结构总门数在5000门以上的verilog HDL模型称之为“软核”。</p>
+<p><strong>固核</strong>：把在某一种现场可编程门阵列（FPGA）器件上实现的、经验证是正确的、总门数在5000门上电路结构编码文件称为“固核”。</p>
+<p><strong>硬核</strong>：把在某一种专用集成电路工艺的（ASIC）器件上实现的、经验证是正确的、总门数在5000门以上的电路结构版图掩膜称为“硬核”。</p>
+<p><strong>IP核</strong>：全称<strong>知识产权核</strong>（英语：<strong>intellectual property core</strong>），是在集成电路的可重用设计方法学中，指某一方提供的、形式为逻辑单元、芯片设计的可重用模组。IP核通常已经通过了设计验证，设计人员以IP核为基础进行设计，可以缩短设计所需的周期。</p>
+<p><strong>综合</strong>：综合是把verilog语言描述的抽象层次较高的设计描述转化成为抽象层次较低的电路网表，表现为一般的数字逻辑，能够对应到具体的门级逻辑。简言之，就是把用硬件描述语言描述的电路转换成实际能够实现的真实电路的过程。包括门级或者寄存器传输级甚至是开关级。</p>
+<p><strong>自顶向下的设计方式</strong>：从系统级开始，把系统划分为基本单元，然后再把每个单元划分为下一层次的基本单元，一直这样做下去，直到可以直接用EDA元件库中的基本元件来实现为止。</p>
+<p> <strong>硬件设计阶段</strong>：建模、仿真、验证、综合。</p>
+<h1 id="模块结构"><a href="#模块结构" class="headerlink" title="模块结构"></a>模块结构</h1><p>模块（block）是Verilog 的基本设计单元。一个模块的Verilog结构位于module和endmodule声明语句之间，一般由四部分组成，<strong>端口定义、IO说明、内部信号说明</strong>以及<strong>功能定义</strong>。后三者又可以概括为<strong>描述逻辑功能部分</strong>。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example block</span></span><br><span class="line"><span class="keyword">module</span> block(a, b, c, d);</span><br><span class="line"><span class="keyword">input</span> a, b;</span><br><span class="line"><span class="keyword">output</span> c, d;</span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> c = a | b;</span><br><span class="line"><span class="keyword">assign</span> d = a &amp; b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="端口定义"><a href="#端口定义" class="headerlink" title="端口定义"></a>端口定义</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> module_name(port_1, port_2, ...);</span><br></pre></td></tr></table></figure>
+<p>模块的端口表示的是模块的输入和输出口，即它与别的模块联系端口的标识。</p>
+<p>引用方法</p>
+<ol>
+<li>严格按照模块定义的端口顺序来连接。不需要标明原模块定义时规定的端口名。</li>
+<li>在引用时用 “.” （点）符号来标明原模块定义的端口名。</li>
+</ol>
+<h2 id="IO说明"><a href="#IO说明" class="headerlink" title="IO说明"></a>IO说明</h2><p>说明模块接口的输入/输出特性。分为输入口、输出口、输入/输出口三类。</p>
+<p>输入口：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> [width-<span class="number">1</span>: <span class="number">0</span>] port_1;</span><br><span class="line"><span class="keyword">input</span> [width-<span class="number">1</span>: <span class="number">0</span>] port_2;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">input</span> port_3;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>输出口：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">output</span> [width-<span class="number">1</span>: <span class="number">0</span>] port_4;</span><br><span class="line"><span class="keyword">output</span> [width-<span class="number">1</span>: <span class="number">0</span>] port_5;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">output</span> port_6;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>输入输出口：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inout</span> [width-<span class="number">1</span>: <span class="number">0</span>] port_7;</span><br><span class="line"><span class="keyword">inout</span> [width-<span class="number">1</span>: <span class="number">0</span>] port_8;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">inout</span> port_9;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>IO说明也可以与端口声明写在一起。</p>
+</blockquote>
+<h2 id="内部信号声明"><a href="#内部信号声明" class="headerlink" title="内部信号声明"></a>内部信号声明</h2><p>声明在模块内用到的和端口有关的额wire和reg类型变量。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span>[width-<span class="number">1</span>: <span class="number">0</span>] r_val_1, r_val_2, ... ;</span><br><span class="line"><span class="keyword">wire</span>[width-<span class="number">1</span>: <span class="number">0</span>] w_val_1, w_val_2, ... ;</span><br></pre></td></tr></table></figure>
+<h2 id="功能定义"><a href="#功能定义" class="headerlink" title="功能定义"></a>功能定义</h2><ol>
+<li>用“assign”声明语句 </li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> a = b &amp; c **<span class="number">2</span>）</span><br></pre></td></tr></table></figure>
+<ol>
+<li>用实例元件</li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">and</span> #<span class="number">2</span> u1(q, a, b)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>always块</li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> clr)</span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (clr) q &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (en) q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>assign语句是描述组合逻辑最常用的方法之一。对assign之后不能加块，实现组合逻辑只能用逐句的使用assign。always块既可以用于描述组合逻辑，也可描述时序逻辑。always 块可用很多种描述手段来表达逻辑。按照一定的风格来编写always块，可以通过综合工具把源代码自动综合成用门级结构表示的组合或时序逻辑电路。</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="常用数据类型"><a href="#常用数据类型" class="headerlink" title="常用数据类型"></a>常用数据类型</h2><h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><h4 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h4><p>4种进制表示形式（二、八、十、十六进制）；x和z值在数字电路中的分别表示不定值和高阻值；定义负数时，减号写在数字定义表达式最前面，以补数形式表示；下划线可以用来分割数的表达以提高程序可读性。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8'b10101100</span>   <span class="comment">//&lt;位宽&gt;&lt;进制&gt;&lt;数字&gt;</span></span><br><span class="line"><span class="number">8'ha2</span></span><br><span class="line"><span class="number">4'b10x0</span></span><br><span class="line"><span class="number">12'dz</span></span><br><span class="line">-<span class="number">8'd5</span></span><br><span class="line"><span class="number">16'b1010_1011_1111_1010</span></span><br></pre></td></tr></table></figure>
+<h4 id="parameter型"><a href="#parameter型" class="headerlink" title="parameter型"></a>parameter型</h4><p>使用parameter来定义一个常量标识符，可以提高程序的可读性和可维护性。parameter型数据和C语言中使用const修饰的变量很相像，不过在模块或实例引用时，可通过参数传递改变被引用模块或实例中已定义的参数。同样，可以使用defparam命令，在一个模块中改变另一个模块的参数。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">parameter</span> msb = <span class="number">7</span>;</span><br><span class="line"><span class="keyword">parameter</span> byte_size = <span class="number">8</span>, byte_msb = byte_size - <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>在程序运行过程中其值可以改变的量。</p>
+<p>网络数据类型：表示结构实体（如：门）之间的物理连接。</p>
+<p>​    不能储存值，且必须受到驱动器（如：assign）的驱动。无驱动器连接的情况下其值为高阻值。</p>
+<p>​    wire型与tri型。</p>
+<h4 id="wire"><a href="#wire" class="headerlink" title="wire"></a>wire</h4><p>wire类型是一种常用的网络数据类型。网络数据类型表示结构实体（例如门）之间的物理连接，这种类型不能存储值，而且必须受到启动器（例如门或连续赋值语句，assign）的驱动。如果没有启动器的连接，该变量就是高阻值z。</p>
+<p>Verilog程序模块中输入、输出信号类型默认时自动定义为wire型。wire型信号可以用作任何方程式的输入，也可以用作“assign”语句或实例元件的输出。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> [n-<span class="number">1</span>: <span class="number">0</span>] name_1, name_2, ... , name_i;</span><br></pre></td></tr></table></figure>
+<h4 id="reg"><a href="#reg" class="headerlink" title="reg"></a>reg</h4><p>存储器数据类型。通过赋值语句可以改变寄存器存储的值，其作用与改变触发器存储的值相当。默认值为不定值x。reg型数据常用来表示“always”模块内指定信号，常代表触发器。在“always”模块内被赋值的每一个信号都必须定义成reg型。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [n-<span class="number">1</span>: <span class="number">0</span>] name_1, name_2, ... , name_i;</span><br></pre></td></tr></table></figure>
+<h4 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h4><p>通过reg 型变量建立数组来对存储器进行建模，可以描述RAM型存储器、ROM存储器和reg文件。</p>
+ <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [n-<span class="number">1</span>: <span class="number">0</span>] memory_name[m-<span class="number">1</span>: <span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><ol>
+<li>算术运算符（+，-，x，/，%）</li>
+<li>赋值运算符（=，&lt;=）</li>
+<li>关系运算符（&gt;，&lt;，&gt;=，&lt;=，==，!=，===，!==）</li>
+<li>逻辑运算符（&amp;&amp;，||，!）</li>
+<li>条件运算符（？：）</li>
+<li>位操作运算符（~，|，^，&amp;，^~，&lt;&lt;，&gt;&gt;，{ }，“缩减运算符“）</li>
+</ol>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>由于操作数中某些位可能为不定值x或高阻值x，使用“==”和“!=”的结果可能为不定值x。而使用“===”和“!==”运算符时，某些位的不定值x和高阻值z也进行比较，两个操作数完全一致，结果才是1，否是为0。“===”和“!==”常用于case表达式的判别，所以又称“case等式运算符”。</li>
+<li>移位运算用0来填补移出的空位。</li>
+<li>缩减运算符和拼接运算符是不同与C语言的语法现象。</li>
+</ul>
+<p>优先级别</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作符</th>
+<th style="text-align:center">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">!   ~</td>
+<td style="text-align:center">高</td>
+</tr>
+<tr>
+<td style="text-align:center">*  /  %</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">+  -</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;&lt;  &gt;&gt;</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;  &lt;=  &gt;  &gt;=</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">==   !=  ===   !==</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">^   ^~</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center">\</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">? :</td>
+<td style="text-align:center">低</td>
+</tr>
+</tbody>
+</table>
+<h1 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h1><h2 id="赋值语句"><a href="#赋值语句" class="headerlink" title="赋值语句"></a>赋值语句</h2><p>Verilog语言中，信号有两种赋值方式，非阻塞赋值（b &lt;= a;）和阻塞赋值（b = a;）。阻塞语句执行后，被赋值的变量值会马上更新，而采用非阻塞赋值时，当整个块结束后才会完成本次赋值操作。</p>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><p>条件语句分为两种，一种为if-else语句，另一种是case语句。条件语句必须在过程块语句（initial和always语句引导的执行语句集合）中使用，除了这两种块语句引导的begin-end块中可以编写条件语句外，模块中其他地方都不能编写。</p>
+<p>if-else的用法与C语言中非常相似，但是要注意在每个if和else后使用begin-end来进行执行语句的集合。否则可能会引起else与if匹配上的错误，导致难以预测的后果。</p>
+<p>case语句是一种多路分支语句，通常用于微指令处理器的指令译码。case语句的所有表达式值位宽必须相等。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line"><span class="keyword">case</span> (&#123;r_VAL_1, r_VAL_2, r_VAL_3&#125;)</span><br><span class="line">    <span class="number">3'b000</span>  : r_RESULT &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="number">3'b001</span>  : r_RESULT &lt;= <span class="number">1</span>;</span><br><span class="line">    <span class="number">3'b010</span>  : r_RESULT &lt;= <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">default</span> : r_RESULT &lt;= <span class="number">9</span>; </span><br><span class="line"><span class="keyword">endcase</span></span><br></pre></td></tr></table></figure>
+<p>针对电路特性Verilog提供了case语句的其他两种形式，casez和casex。casez语句来处理不考虑高阻值z的比较过程，casex语句则将高阻值z和不定值都视为<strong>不必关心</strong>的情况。所谓不必关心的情况，即在表达式进行比较时，不将该位的状态考虑在内。</p>
+<h2 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h2><p>四种循环语句有forever语句、repeat语句、while语句、for语句四种。</p>
+<p>forever循环语句常用语陈升周期性波形，用来作为仿真测试信号。它与always语句不通之处在于不能独立写在程序中，而必须写在initial块中。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">forever</span> statement;</span><br></pre></td></tr></table></figure>
+<p>repeat语句中可以使用表达式指定循环执行的次数。表达式通常为常量表达式。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repeat</span> (expression) statement;</span><br></pre></td></tr></table></figure>
+<p> 另外两个循环语句，while和for与在C语言中有相同的用法。上述中的statement都可以使用begin-end来组织多个语句。</p>
+<h2 id="块语句"><a href="#块语句" class="headerlink" title="块语句"></a>块语句</h2><p>语句块的作用是将多条语句合并成一组，使它们像一条语句那样。在Verilog中块语句分为两种，一种是顺序块（也称过程块，关键字begin-end），另一种为并行块（关键字begin-end）。</p>
+<p>在过程块中，语句一条接一条按顺序执行，除了带有内嵌延迟控制的非阻塞赋值语句。如果语句中包括延迟或事件控制，那么延迟总是相对于前面那条语句执行完成的仿真时间的。而在并行块中，所有语句并发执行。语句执行的顺序有个字语句内延迟或事件控制决定，且延迟或事件控制是相对于块语句开始执行的时刻而言的。</p>
+<p>块语句还具有嵌套块和命名块的特点。块的嵌套使得顺序块和并行块能够混合在一起使用。如果给块进行命名，则可以在命名块中声明局部变量，此变量可以通过层次名引用进行访问。此外，命令块可以被禁用，如停止其执行（<code>diable block_name;</code>）。</p>
+<h2 id="结构说明语句"><a href="#结构说明语句" class="headerlink" title="结构说明语句"></a>结构说明语句</h2><p>在Verilog语言中的任何过程模块都从属于一下4中结构的说明语句</p>
+<ul>
+<li>initial说明语句</li>
+<li>always说明语句</li>
+<li>task说明语句</li>
+<li>function说明语句</li>
+</ul>
+<h3 id="initial-和-always"><a href="#initial-和-always" class="headerlink" title="initial 和 always"></a>initial 和 always</h3><p>一个程序中可以有多个initial和always过程块。每个initial和always说明语句在仿真的一开始同时立即执行。initial 块只执行一次，而always块可以不断地反复执行，直到仿真结束。always块执行与否要看它的处罚条件是否满足。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">initial</span> </span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        statement_1;</span><br><span class="line">        statement_2;</span><br><span class="line">        ...</span><br><span class="line">        statement_n;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @ &lt;condition_1 <span class="keyword">or</span> condition_2 ... &gt;   <span class="comment">// always &lt;时序控制&gt; &lt;语句&gt;</span></span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        statement_1;</span><br><span class="line">        statement_2;</span><br><span class="line">        ...</span><br><span class="line">        statement_n;</span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="task-和-function"><a href="#task-和-function" class="headerlink" title="task 和 function"></a>task 和 function</h3><p>task和function分别用于定义<strong>任务和函数</strong>，它们把一个很大的程序模块分解成许多较小的任务和函数便于理解和调试。输入、输出和总线信号的值可以传入、传出任务和函数。</p>
+<p>任务和函数主要有以下4个不同点</p>
+<ol>
+<li>函数只能与主模块共用一个仿真事件单位，而任务可以定义自己的仿真时间单位。</li>
+<li>函数不能启动任务，而任务能启动其他任务和函数。</li>
+<li>函数至少要有一个输入变量，而任务可以没有或有多个任何类型的变量。</li>
+<li>函数返回一个值，而任务则<strong>不返回值</strong>。</li>
+</ol>
+<p>函数在定义中必须有一条赋值语句给函数中的一个内部变量赋以函数的结果值，该内部变量具有和函数名相同的名字。</p>
+<p>Verilog 中的函数是不能够进行递归调用的。某函数在两个不同的地方被同时并发调用，会对同一块地址空间进行操作。如果使用了 关键字 automatic，则该函数将称为自动的或可递归的。 </p>
+<h2 id="生成语句"><a href="#生成语句" class="headerlink" title="生成语句"></a>生成语句</h2><p>生成语句（关键字 generate - endgenerate）可以动态地生成verilog代码，方便了参数化模块的生成。生成块的本质是使用循环内的一条语句来代替多条重复的verilog语句，简化用户的编程。</p>
+<p>在Verilog中有3种创建生成语句的方法分别为，循环生成、条件生成和case生成。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// generate example</span></span><br><span class="line"><span class="keyword">generate</span></span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; N; j = j + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">begin</span>: xor_loop</span><br><span class="line">            <span class="keyword">xor</span> gl (out[j], io[j], i1[j]);</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endgenerate</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对生成语句的作用还不甚理解，日后工程中再去理解。</p>
+</blockquote>
+<h1 id="常用系统调用与预编译处理"><a href="#常用系统调用与预编译处理" class="headerlink" title="常用系统调用与预编译处理"></a>常用系统调用与预编译处理</h1><h2 id="常用系统调用"><a href="#常用系统调用" class="headerlink" title="常用系统调用"></a>常用系统调用</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">系统调用</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$display 和 $write</td>
+<td style="text-align:center">用来输出信息，类似于C语言中的printf</td>
+</tr>
+<tr>
+<td style="text-align:center">$strobe</td>
+<td style="text-align:center">选通显示</td>
+</tr>
+<tr>
+<td style="text-align:center">$fopen</td>
+<td style="text-align:center">打开文件</td>
+</tr>
+<tr>
+<td style="text-align:center">$fdisplay $fmonitor $fwrite $fstrobe</td>
+<td style="text-align:center">文件操作</td>
+</tr>
+<tr>
+<td style="text-align:center">$fclose</td>
+<td style="text-align:center">关闭文件</td>
+</tr>
+<tr>
+<td style="text-align:center">%m</td>
+<td style="text-align:center">显示层次</td>
+</tr>
+<tr>
+<td style="text-align:center">$monitor $monitoron $monitoroff</td>
+<td style="text-align:center">提供了监控和输出参数列表中表达式或变量值的功能</td>
+</tr>
+<tr>
+<td style="text-align:center">$time   $realtime</td>
+<td style="text-align:center">时间度量系统函数</td>
+</tr>
+<tr>
+<td style="text-align:center">$finish</td>
+<td style="text-align:center">退出仿真器，返回主操作系统，结束仿真过程</td>
+</tr>
+<tr>
+<td style="text-align:center">$stop</td>
+<td style="text-align:center">把EDA工具（如仿真器）置成暂停模式</td>
+</tr>
+<tr>
+<td style="text-align:center">$readmemb 和 $readmemh</td>
+<td style="text-align:center">从文件中读取数据到存储器中</td>
+</tr>
+<tr>
+<td style="text-align:center">$random</td>
+<td style="text-align:center">随机数产生</td>
+</tr>
+<tr>
+<td style="text-align:center">$test$plusargs</td>
+<td style="text-align:center">描述条件执行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="预编译处理"><a href="#预编译处理" class="headerlink" title="预编译处理"></a>预编译处理</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">宏定义</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">`define</td>
+<td style="text-align:center">宏定义</td>
+</tr>
+<tr>
+<td style="text-align:center">`include</td>
+<td style="text-align:center">文件包含</td>
+</tr>
+<tr>
+<td style="text-align:center">`timescale</td>
+<td style="text-align:center">时间尺度</td>
+</tr>
+<tr>
+<td style="text-align:center">`ifdef</td>
+<td style="text-align:center">条件编译命令</td>
+</tr>
+<tr>
+<td style="text-align:center">`else</td>
+<td style="text-align:center">条件编译命令</td>
+</tr>
+<tr>
+<td style="text-align:center">`endif</td>
+<td style="text-align:center">条件编译命令</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h1><p>夏宇闻. VERILOG数字系统设计教程, (第二版)[M]. 北京航空航天大学出版社, 2008.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/嵌入式/" rel="tag"># 嵌入式</a>
+          
+            <a href="/tags/系统结构/" rel="tag"># 系统结构</a>
+          
+            <a href="/tags/FPGA/" rel="tag"># FPGA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/21/memory-manage-on-embeded-system/" rel="next" title="在低资源的嵌入式主控上进行内存管理">
+                <i class="fa fa-chevron-left"></i> 在低资源的嵌入式主控上进行内存管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar2.jpg"
+                alt="Hatton.Liu" />
+            
+              <p class="site-author-name" itemprop="name">Hatton.Liu</p>
+              <p class="site-description motion-element" itemprop="description">一个梦想成为架构师的技术小白</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hattonl@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词概念"><span class="nav-number">1.</span> <span class="nav-text">名词概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块结构"><span class="nav-number"></span> <span class="nav-text">模块结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#端口定义"><span class="nav-number"></span> <span class="nav-text">端口定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO说明"><span class="nav-number"></span> <span class="nav-text">IO说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部信号声明"><span class="nav-number"></span> <span class="nav-text">内部信号声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能定义"><span class="nav-number"></span> <span class="nav-text">功能定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number"></span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用数据类型"><span class="nav-number"></span> <span class="nav-text">常用数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常量"><span class="nav-number">1.</span> <span class="nav-text">常量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数字"><span class="nav-number">1.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parameter型"><span class="nav-number">1.2.</span> <span class="nav-text">parameter型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#wire"><span class="nav-number">2.1.</span> <span class="nav-text">wire</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reg"><span class="nav-number">2.2.</span> <span class="nav-text">reg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memory"><span class="nav-number">2.3.</span> <span class="nav-text">memory</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算符"><span class="nav-number"></span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语句"><span class="nav-number"></span> <span class="nav-text">语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值语句"><span class="nav-number"></span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件语句"><span class="nav-number"></span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环语句"><span class="nav-number"></span> <span class="nav-text">循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块语句"><span class="nav-number"></span> <span class="nav-text">块语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构说明语句"><span class="nav-number"></span> <span class="nav-text">结构说明语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#initial-和-always"><span class="nav-number">1.</span> <span class="nav-text">initial 和 always</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#task-和-function"><span class="nav-number">2.</span> <span class="nav-text">task 和 function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成语句"><span class="nav-number"></span> <span class="nav-text">生成语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用系统调用与预编译处理"><span class="nav-number"></span> <span class="nav-text">常用系统调用与预编译处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用系统调用"><span class="nav-number"></span> <span class="nav-text">常用系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预编译处理"><span class="nav-number"></span> <span class="nav-text">预编译处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考书籍"><span class="nav-number"></span> <span class="nav-text">参考书籍</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hatton.Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
