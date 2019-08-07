@@ -1,361 +1,97 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
+<html lang="zh-Hans">
+  <head><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
+<meta name="description" content="Verilog基础语法整理"/><meta name="keywords" content="嵌入式, 系统结构, FPGA, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yoursite.com/2018/09/07/verilog-basic-grammar/"/>
 
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="嵌入式,系统结构,FPGA," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
-<meta name="keywords" content="嵌入式,系统结构,FPGA">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Verilog基础语法整理">
-<meta property="og:url" content="http://yoursite.com/2018/09/07/verilog-basic-grammar/index.html">
-<meta property="og:site_name" content="Hatton&#39;s Notes">
-<meta property="og:description" content="研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2018/09/07/5b929bd24ada2.png">
-<meta property="og:image" content="http://yoursite.com/images/verilog-prammar.png">
-<meta property="og:updated_time" content="2019-01-13T12:06:35.031Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Verilog基础语法整理">
-<meta name="twitter:description" content="研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。">
-<meta name="twitter:image" content="https://i.loli.net/2018/09/07/5b929bd24ada2.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.3',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
     }
-  };
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
 </script>
 
+    <title>Verilog基础语法整理 - Hatton's Notes</title>
+  </head>
 
-
-  <link rel="canonical" href="http://yoursite.com/2018/09/07/verilog-basic-grammar/"/>
-
-
-
-
-
-  <title>Verilog基础语法整理 | Hatton's Notes</title>
-  
-
-
-
-
-
-
-
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hatton's Notes</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
   </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 </div>
 
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a></ul>
 </nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
 
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      </ul></nav>
+</header>
 
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Verilog基础语法整理
+        </h1>
 
- </div>
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-07
+        </span><span class="post-category">
+            <a href="/categories/学习笔记/">学习笔记</a>
+            </span>
+        </div>
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/07/verilog-basic-grammar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hatton.Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar2.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hatton's Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Verilog基础语法整理</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T09:48:00+08:00">
-                2018-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#名词概念"><span class="toc-text">名词概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模块结构"><span class="toc-text">模块结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#端口定义"><span class="toc-text">端口定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO说明"><span class="toc-text">IO说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内部信号声明"><span class="toc-text">内部信号声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#功能定义"><span class="toc-text">功能定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常量"><span class="toc-text">常量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数字"><span class="toc-text">数字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#parameter型"><span class="toc-text">parameter型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#wire"><span class="toc-text">wire</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reg"><span class="toc-text">reg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#memory"><span class="toc-text">memory</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运算符"><span class="toc-text">运算符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语句"><span class="toc-text">语句</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#赋值语句"><span class="toc-text">赋值语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件语句"><span class="toc-text">条件语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#循环语句"><span class="toc-text">循环语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#块语句"><span class="toc-text">块语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构说明语句"><span class="toc-text">结构说明语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#initial-和-always"><span class="toc-text">initial 和 always</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#task-和-function"><span class="toc-text">task 和 function</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成语句"><span class="toc-text">生成语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用系统调用与预编译处理"><span class="toc-text">常用系统调用与预编译处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用系统调用"><span class="toc-text">常用系统调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预编译处理"><span class="toc-text">预编译处理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考书籍"><span class="toc-text">参考书籍</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
 <a id="more"></a>
 <p><img src="https://i.loli.net/2018/09/07/5b929bd24ada2.png" alt="Verilog基础语法导图"></p>
 <p><img src="/images/verilog-prammar.png" alt="Verilog基础语法导图2"></p>
@@ -622,391 +358,70 @@
 </table>
 <h1 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h1><p>夏宇闻. VERILOG数字系统设计教程, (第二版)[M]. 北京航空航天大学出版社, 2008.</p>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yoursite.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://yoursite.com/2018/09/07/verilog-basic-grammar/">http://yoursite.com/2018/09/07/verilog-basic-grammar/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
         <div class="post-tags">
-          
-            <a href="/tags/嵌入式/" rel="tag"># 嵌入式</a>
-          
-            <a href="/tags/系统结构/" rel="tag"># 系统结构</a>
-          
-            <a href="/tags/FPGA/" rel="tag"># FPGA</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/01/21/memory-manage-on-embeded-system/" rel="next" title="在低资源的嵌入式主控上进行内存管理">
-                <i class="fa fa-chevron-left"></i> 在低资源的嵌入式主控上进行内存管理
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/19/top-symposiums-of-computer-architecture/" rel="prev" title="计算机体系结构领域顶级会议及近三年会议官网">
-                计算机体系结构领域顶级会议及近三年会议官网 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  
-
-
-        </div>
+            <a href="/tags/嵌入式/">嵌入式</a>
+            <a href="/tags/系统结构/">系统结构</a>
+            <a href="/tags/FPGA/">FPGA</a>
+            </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
+        <nav class="post-nav"><a class="prev" href="/2018/11/19/top-symposiums-of-computer-architecture/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">计算机体系结构领域顶级会议及近三年会议官网</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/01/21/memory-manage-on-embeded-system/">
+        <span class="next-text nav-default">在低资源的嵌入式主控上进行内存管理</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar2.jpg"
-                alt="Hatton.Liu" />
-            
-              <p class="site-author-name" itemprop="name">Hatton.Liu</p>
-              <p class="site-description motion-element" itemprop="description">一个梦想成为架构师的技术小白</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">7</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          <div class="links-of-author motion-element">
-            
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/yourname" target="_blank" title="GitHub">
-                    
-                      <i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:hattonl@163.com" target="_blank" title="E-Mail">
-                    
-                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                </span>
-              
-            
-          </div>
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#名词概念"><span class="nav-number">1.</span> <span class="nav-text">名词概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块结构"><span class="nav-number">2.</span> <span class="nav-text">模块结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#端口定义"><span class="nav-number">2.1.</span> <span class="nav-text">端口定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO说明"><span class="nav-number">2.2.</span> <span class="nav-text">IO说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部信号声明"><span class="nav-number">2.3.</span> <span class="nav-text">内部信号声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能定义"><span class="nav-number">2.4.</span> <span class="nav-text">功能定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型"><span class="nav-number">3.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常量"><span class="nav-number">3.1.</span> <span class="nav-text">常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字"><span class="nav-number">3.1.1.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parameter型"><span class="nav-number">3.1.2.</span> <span class="nav-text">parameter型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">3.2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#wire"><span class="nav-number">3.2.1.</span> <span class="nav-text">wire</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reg"><span class="nav-number">3.2.2.</span> <span class="nav-text">reg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memory"><span class="nav-number">3.2.3.</span> <span class="nav-text">memory</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算符"><span class="nav-number">4.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语句"><span class="nav-number">5.</span> <span class="nav-text">语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值语句"><span class="nav-number">5.1.</span> <span class="nav-text">赋值语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件语句"><span class="nav-number">5.2.</span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环语句"><span class="nav-number">5.3.</span> <span class="nav-text">循环语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块语句"><span class="nav-number">5.4.</span> <span class="nav-text">块语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构说明语句"><span class="nav-number">5.5.</span> <span class="nav-text">结构说明语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#initial-和-always"><span class="nav-number">5.5.1.</span> <span class="nav-text">initial 和 always</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#task-和-function"><span class="nav-number">5.5.2.</span> <span class="nav-text">task 和 function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成语句"><span class="nav-number">5.6.</span> <span class="nav-text">生成语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用系统调用与预编译处理"><span class="nav-number">6.</span> <span class="nav-text">常用系统调用与预编译处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用系统调用"><span class="nav-number">6.1.</span> <span class="nav-text">常用系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预编译处理"><span class="nav-number">6.2.</span> <span class="nav-text">预编译处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考书籍"><span class="nav-number">7.</span> <span class="nav-text">参考书籍</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/ahonn" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
   </span>
-  <span class="author" itemprop="copyrightHolder">Hatton.Liu</span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
 
-  
+  <span class="copyright-year">&copy;2015 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
 </div>
+</footer>
 
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
       </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
 </body>
 </html>
