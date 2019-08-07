@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Hello工程分析hello工程hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行. 1234#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;    printf(&quot;Hello, World!\n&quot;);&amp;#125; 该工程编译后在freedom上执行的效果为通过串口向主机发送一串字符Hello, world!。不过大家都明白，背后">
+<meta name="description" content="Hello工程分析hello工程hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行. 1234#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;    printf(&quot;Hello, World!\n&quot;);&amp;#125;">
 <meta name="keywords" content="系统结构,编译">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RISCV笔记_01_FreedomSDK编译分析">
+<meta property="og:title" content="RISCV笔记_01_FreedomSDK编译过程分析">
 <meta property="og:url" content="http://yoursite.com/2019/06/25/riscv_freedom_software_01/index.html">
 <meta property="og:site_name" content="Hatton&#39;s Notes">
-<meta property="og:description" content="Hello工程分析hello工程hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行. 1234#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;    printf(&quot;Hello, World!\n&quot;);&amp;#125; 该工程编译后在freedom上执行的效果为通过串口向主机发送一串字符Hello, world!。不过大家都明白，背后">
+<meta property="og:description" content="Hello工程分析hello工程hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行. 1234#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;    printf(&quot;Hello, World!\n&quot;);&amp;#125;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-25T08:56:52.011Z">
+<meta property="og:updated_time" content="2019-08-07T06:54:37.640Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RISCV笔记_01_FreedomSDK编译分析">
-<meta name="twitter:description" content="Hello工程分析hello工程hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行. 1234#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;    printf(&quot;Hello, World!\n&quot;);&amp;#125; 该工程编译后在freedom上执行的效果为通过串口向主机发送一串字符Hello, world!。不过大家都明白，背后">
+<meta name="twitter:title" content="RISCV笔记_01_FreedomSDK编译过程分析">
+<meta name="twitter:description" content="Hello工程分析hello工程hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行. 1234#include &amp;lt;stdio.h&amp;gt;int main() &amp;#123;    printf(&quot;Hello, World!\n&quot;);&amp;#125;">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>RISCV笔记_01_FreedomSDK编译分析 | Hatton's Notes</title>
+  <title>RISCV笔记_01_FreedomSDK编译过程分析 | Hatton's Notes</title>
   
 
 
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">RISCV笔记_01_FreedomSDK编译分析</h1>
+          <h1 class="post-title" itemprop="name headline">RISCV笔记_01_FreedomSDK编译过程分析</h1>
         
 
         <div class="post-meta">
@@ -354,22 +354,23 @@
       
         <h1 id="Hello工程分析"><a href="#Hello工程分析" class="headerlink" title="Hello工程分析"></a>Hello工程分析</h1><h2 id="hello工程"><a href="#hello工程" class="headerlink" title="hello工程"></a>hello工程</h2><p>hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>该工程编译后在freedom上执行的效果为通过串口向主机发送一串字符<code>Hello, world!</code>。不过大家都明白，背后的“真相”并不想看上去那么简单。如上所见的代码只能算是应用层面的代码，其底层调用了C库，启动代码等屏蔽了RISCV硬件细节的BSP层。通过符合RISCV标准的交叉编译工具转化为可以在RISCV体系结构上执行的二进制代码后才能有如此神奇的效果。下面就通过分析代码的编译过程来学习一下，其底层所依赖的文件和交叉编译工具。</p>
 <h2 id="工程编译与下载"><a href="#工程编译与下载" class="headerlink" title="工程编译与下载"></a>工程编译与下载</h2><p>hello工程的基本操作</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 清除之前的编译所产生的文件</span><br><span class="line">make PROGRAM=hello TARGET=freedom-e310-arty clean</span><br><span class="line"><span class="meta">#</span> 进行编译</span><br><span class="line">make PROGRAM=hello TARGET=freedom-e310-arty software</span><br><span class="line"><span class="meta">#</span> 上传工程到开发板</span><br><span class="line">make PROGRAM=hello TARGET=freedom-e310-arty upload</span><br></pre></td></tr></table></figure>
 <p>使用 <code>make software</code> 命令对hello工程进行编译，并保存其log文件来进行分析。</p>
 <h2 id="编译过程分析"><a href="#编译过程分析" class="headerlink" title="编译过程分析"></a>编译过程分析</h2><h3 id="依赖库编译metal"><a href="#依赖库编译metal" class="headerlink" title="依赖库编译metal"></a>依赖库编译metal</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cd /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/build/debug/ &amp;&amp; \</span><br><span class="line">	CFLAGS="-march=rv32imac -mabi=ilp32 -mcmodel=medlow -ffunction-sections -fdata-sections -I/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include -O0 -g" \</span><br><span class="line">	/home/hatton/repos/freedom-e-sdk/freedom-metal/configure \</span><br><span class="line">	--host=riscv64-unknown-elf \</span><br><span class="line">	--prefix=/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install \</span><br><span class="line">	--libdir=/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug \</span><br><span class="line">	--disable-maintainer-mode \</span><br><span class="line">	--with-preconfigured \</span><br><span class="line">	--with-machine-name=freedom-e310-arty \</span><br><span class="line">	--with-machine-header=/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/metal.h \</span><br><span class="line">	--with-machine-ldscript=/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/metal.default.lds \</span><br><span class="line">	--with-builtin-libgloss</span><br></pre></td></tr></table></figure>
 <p>编译过程中产生的log比较长，拆成几部分进行分析。首先是根据make的参数执行configure文件进行一些配置，这些配置都会反映在后面的编译过程中。</p>
-<p>从第一部分的参数可以看出，使用到了头文件freedom-e310-arty/metal.h以及lds文件metal.default.lds</p>
+<p>从第一部分的参数可以看出，使用到了头文件 <code>freedom-e310-arty/metal.h</code> 以及lds文件 <code>metal.default.lds</code>。</p>
 <p>lds文件的作用稍后进行分析。</p>
 <p>再往下是一些gcc的命令，现在来选择一句分析一下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">riscv64-unknown-elf-gcc </span><br><span class="line">-DPACKAGE_NAME=\"freedom-metal\" </span><br><span class="line">-DPACKAGE_TARNAME=\"freedom-metal\" </span><br><span class="line">-DPACKAGE_VERSION=\"v0.1.2\" </span><br><span class="line">-DPACKAGE_STRING=\"freedom-metal\ v0.1.2\" </span><br><span class="line">-DPACKAGE_BUGREPORT=\"palmer@sifive.com\" </span><br><span class="line">-DPACKAGE_URL=\"\" </span><br><span class="line">-DPACKAGE=\"freedom-metal\" </span><br><span class="line">-DVERSION=\"v0.1.2\" </span><br><span class="line">-I. </span><br><span class="line">-I/home/hatton/repos/freedom-e-sdk/freedom-metal    </span><br><span class="line">-lriscv_metal_</span><br><span class="line">-D__METAL_MACHINE_HEADER=\"/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/metal.h\" </span><br><span class="line">-march=rv32imac </span><br><span class="line">-mabi=ilp32 </span><br><span class="line">-mcmodel=medlow </span><br><span class="line">-ffunction-sections </span><br><span class="line">-fdata-sections </span><br><span class="line">-I/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include </span><br><span class="line">-O0 </span><br><span class="line">-g </span><br><span class="line">-MT src/drivers/libriscv__mmachine__freedom-e310-arty_a-fixed-clock.o </span><br><span class="line">-MD </span><br><span class="line">-MP </span><br><span class="line">-MF src/drivers/.deps/libriscv__mmachine__freedom-e310-arty_a-fixed-clock.Tpo </span><br><span class="line">-c </span><br><span class="line">-o src/drivers/libriscv__mmachine__freedom-e310-arty_a-fixed-clock.o `test -f 'src/drivers/fixed-clock.c' || echo '/home/hatton/repos/freedom-e-sdk/freedom-metal/'`src/drivers/fixed-clock.c</span><br><span class="line"></span><br><span class="line">mv -f src/drivers/.deps/libriscv__mmachine__freedom-e310-arty_a-fixed-clock.Tpo src/drivers/.deps/libriscv__mmachine__freedom-e310-arty_a-fixed-clock.Po</span><br></pre></td></tr></table></figure>
 <p>再往下一部分就是gcc的编译过程。</p>
 <p>-D选项可以定义一些全局的宏到源文件中。</p>
-<p>-I \<dir>表示将\<dir>设定为第一个查找头文件的目录，也可以说是除了默认的头文件搜索路径（如/usr/include等）外，还在在路径\<dir>进行所需的头文件搜索并且搜索循序要先于默认的头文件搜索路径。</dir></dir></dir></p>
+<p>-I <code>&lt;dir&gt;</code> 表示将 <code>&lt;dir&gt;</code> 设定为第一个查找头文件的目录，也可以说是除了默认的头文件搜索路径（如/usr/include等）外，还在在路径<code>&lt;dir&gt;</code>进行所需的头文件搜索并且搜索循序要先于默认的头文件搜索路径。</p>
 <p>-l 用来制定程序要链接的库，-l紧接着是库名（不是库文件名），比如-ltest，表示要链接的库的名字为libtest.so -L 用来指定库文件所在的目录</p>
 <p>-march 表示不同的架构平台。</p>
-<p>-mabi 用来选择数据模型和浮点参数传递规则 ilp32 表示int/ long/ 指针字长都是32bits且不需要浮点扩展指令，float参数和double参数都使用整数寄存器进行传递。具体可见参考文献。</p>
+<p>-mabi 用来选择数据模型和浮点参数传递规则 ilp32 表示 <code>int</code>、<code>long</code> 和指针字长都是32bits且不需要浮点扩展指令，float参数和double参数都使用整数寄存器进行传递。具体可见参考文献。</p>
 <p>-mcmodel=medlow  用于指示程序的寻址范围固定只能在-2GB到+2GB的空间内。-2GB指的是整个地址空间最高2GB地址区间。对于32位而言，整个地址空间大小也就4GB，因此该选项的任何值对于编译的结果都没有影响。</p>
 <p>-ffunction-sections  -fdata-sections 将每个函数或符号创建一个section，其中每个section名与function或data名保持一致。因为GCC链接操作是以section作为最小的处理单元，只要一个section中的某个符号被引用，该section就会被加入到可执行程序中去。使用这两个参数就可以在链接阶段使用参数<code>-Wl,–gc-sections</code> 指示链接器去掉不用的section，从而减少最终可执行程序的大小。</p>
 <p>-O0 不进行优化</p>
@@ -581,7 +582,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -592,7 +593,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
