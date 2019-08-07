@@ -53,19 +53,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">首页
+        <li class="mobile-menu-item">Home
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">归档
+        <li class="mobile-menu-item">Archives
           </li>
       </a><a href="/tags">
-        <li class="mobile-menu-item">标签
+        <li class="mobile-menu-item">Tags
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">分类
+        <li class="mobile-menu-item">Categories
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">关于
+        <li class="mobile-menu-item">About
           </li>
       </a></ul>
 </nav>
@@ -76,27 +76,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            首页
+            Home
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            归档
+            Archives
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/tags">
-            标签
+            Tags
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            分类
+            Categories
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            关于
+            About
             </a>
         </li>
       </ul></nav>
@@ -121,7 +121,7 @@
     <div class="post-content"><h1 id="Hello工程分析"><a href="#Hello工程分析" class="headerlink" title="Hello工程分析"></a>Hello工程分析</h1><h2 id="hello工程"><a href="#hello工程" class="headerlink" title="hello工程"></a>hello工程</h2><p>hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2019/06/25/riscv_freedom_software_01/" class="read-more-link">阅读更多</a>
+            <a href="/2019/06/25/riscv_freedom_software_01/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -138,7 +138,7 @@
     <div class="post-content"><p>image-test</p>
 <p><img src="/images/image_test_3.jpeg" title="Image1_1"></p>
           <div class="read-more">
-            <a href="/2019/01/13/image-test-post/" class="read-more-link">阅读更多</a>
+            <a href="/2019/01/13/image-test-post/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -157,7 +157,7 @@
 
     <div class="post-content"><p>切换C++刷leetcode时发现一些关于C++的基本操作都忘的差不多了，于是决定逐个记录下来。这篇事关于C++中vector操作的一些复习总结。<br>
           <div class="read-more">
-            <a href="/2018/12/19/vector-op-cpp/" class="read-more-link">阅读更多</a>
+            <a href="/2018/12/19/vector-op-cpp/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -176,7 +176,7 @@
 
     <div class="post-content"><p>计算机体系结构领域顶级会议及近三年会议官网。</p>
           <div class="read-more">
-            <a href="/2018/11/19/top-symposiums-of-computer-architecture/" class="read-more-link">阅读更多</a>
+            <a href="/2018/11/19/top-symposiums-of-computer-architecture/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -195,7 +195,7 @@
 
     <div class="post-content"><p>研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
           <div class="read-more">
-            <a href="/2018/09/07/verilog-basic-grammar/" class="read-more-link">阅读更多</a>
+            <a href="/2018/09/07/verilog-basic-grammar/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -215,7 +215,7 @@
     <div class="post-content"><p>在低资源的嵌入式主控上进行内存管理</p>
 <p>最近在做的一个嵌入式的项目中，需要使用到大量的内存空间对数据进行缓存。但是缓存的数据块大小的不确定的，最小可能只有20个字节，最多的能达到400多字节。并且有多少这样的数据包还是不确定的。查看了原本的实现方式，为每个包都分配了最大的字节数，也就是400，然而大部分的数据包都远小于这个值，这样的处理方式势必会造成大量的内存浪费，在低端嵌入式处理器上不太可行。所以，笔者打算实现一个动态内存分配的方法，来解决这个问题。</p>
           <div class="read-more">
-            <a href="/2018/01/21/memory-manage-on-embeded-system/" class="read-more-link">阅读更多</a>
+            <a href="/2018/01/21/memory-manage-on-embeded-system/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -236,7 +236,7 @@
 <p>廖老师说，嵌入式系统就是一个精简的计算机系统。学习嵌入式的目的，就是为了学习计算机体系结构的知识。</p>
 </blockquote>
           <div class="read-more">
-            <a href="/2016/12/21/study-guide/" class="read-more-link">阅读更多</a>
+            <a href="/2016/12/21/study-guide/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <nav class="pagination"></nav></section></div></div>
@@ -247,11 +247,11 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
