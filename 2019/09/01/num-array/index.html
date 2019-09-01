@@ -53,19 +53,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">Home
+        <li class="mobile-menu-item">首页
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">Archives
+        <li class="mobile-menu-item">归档
           </li>
       </a><a href="/tags">
-        <li class="mobile-menu-item">Tags
+        <li class="mobile-menu-item">标签
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories
+        <li class="mobile-menu-item">分类
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">About
+        <li class="mobile-menu-item">关于
           </li>
       </a></ul>
 </nav>
@@ -76,27 +76,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            Home
+            首页
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            Archives
+            归档
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/tags">
-            Tags
+            标签
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            Categories
+            分类
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            About
+            关于
             </a>
         </li>
       </ul></nav>
@@ -119,7 +119,7 @@
     </header>
 
     <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">Contents</h2>
+    <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本思想"><span class="toc-text">基本思想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现代码"><span class="toc-text">实现代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
     </div>
@@ -141,7 +141,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算数组nums_下标为0到下标为i的所有元素的和。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (idx &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        sum += tree_[idx];</span><br><span class="line">        idx -= (idx &amp; -idx);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>与获得前n项和的原理相同，若原数组中有需要更新时，则需要将树状数组中包含该节点值的元素都做更新。根据树状数组数据结构的特点，从下标idx开始，依次使其二进制表示时最右侧为1的位置加1即可得到所有需要在树状数组中更新的元素的下标。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将数组nums_下标为i的元素更新为val，同时更新树状数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> tem = val-nums_[i];</span><br><span class="line">    nums_[i] = val;</span><br><span class="line">    <span class="keyword">while</span> (idx &lt;= maxidx_) &#123;</span><br><span class="line">        tree_[idx] += tem;</span><br><span class="line">        idx += (idx &amp; -idx);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>除了用于求可变数组的区间和之外，树状数组还可用于求原数组中在一定区间内出现的频率问题。如<a href="https://leetcode.com/problems/range-sum-query-mutable/" target="_blank" rel="noopener">leetcode-307</a>、<a href="https://leetcode.com/problems/reverse-pairs/" target="_blank" rel="noopener">leetcode-493</a>等。</p>
+<p>除了用于求可变数组的区间和之外，树状数组还可用于求原数组中在一定区间内出现的频率问题（累计频率问题），如数组中某元素右侧大于该元素的元素个数有多少个。例<a href="https://leetcode.com/problems/range-sum-query-mutable/" target="_blank" rel="noopener">leetcode-307</a>、<a href="https://leetcode.com/problems/reverse-pairs/" target="_blank" rel="noopener">leetcode-493</a>等。</p>
 <h1 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h1><p>实现代码中，数组<code>num_</code>保存了原数组的值，树状数组为<code>tree_</code>，其中<code>tree_[0]</code>起到占位的作用，没有保存元素信息。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    NumArray(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        maxidx_ = nums.size();</span><br><span class="line">        nums_ = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(maxidx_, <span class="number">0</span>);</span><br><span class="line">        tree_ = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(maxidx_ + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); ++i)</span><br><span class="line">            update(i, nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将数组nums_下标为i的元素更新为val，同时更新树状数组</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> tem = val-nums_[i];</span><br><span class="line">        nums_[i] = val;</span><br><span class="line">        <span class="keyword">while</span> (idx &lt;= maxidx_) &#123;</span><br><span class="line">            tree_[idx] += tem;</span><br><span class="line">            idx += (idx &amp; -idx);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算数组nums_从下标i到下标j的所有元素的和，闭区间</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getSum(j) - getSum(i<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 计算数组nums_从下标为0到下标为i的所有元素的和。</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (idx &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            sum += tree_[idx];</span><br><span class="line">            idx -= (idx &amp; -idx);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> maxidx_;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; tree_;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; nums_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="https://www.cnblogs.com/findview/archive/2019/08/01/11281628.html" target="_blank" rel="noopener">https://www.cnblogs.com/findview/archive/2019/08/01/11281628.html</a></p>
@@ -153,15 +153,15 @@
       </div>
       <div class="post-copyright">
     <p class="copyright-item">
-      <span>Author: </span>
+      <span>原文作者: </span>
       <a href="http://yandongl.com">Hatton.Liu</a>
     </p>
     <p class="copyright-item">
-      <span>Link: </span>
+      <span>原文链接: </span>
       <a href="http://yandongl.com/2019/09/01/num-array/">http://yandongl.com/2019/09/01/num-array/</a>
     </p>
     <p class="copyright-item">
-      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
   </div>
       <footer class="post-footer">
@@ -172,7 +172,7 @@
         
         <nav class="post-nav"><a class="next" href="/2019/06/25/riscv_freedom_software_01/">
         <span class="next-text nav-default">RISCV笔记_01_FreedomSDK编译过程分析</span>
-        <span class="prev-text nav-mobile">Next</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
     </nav></footer>
@@ -184,11 +184,11 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    主题 - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
