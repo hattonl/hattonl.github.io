@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="寻找凸包之Graham扫描法"/><meta name="keywords" content="数据结构, 图形计算, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2019/09/03/convexhull-graham/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+
+    <title>寻找凸包之Graham扫描法 - Hatton's Notes</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/tags">
+        <li class="mobile-menu-item">标签
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            标签
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            分类
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">寻找凸包之Graham扫描法
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-09-03
+        </span><span class="post-category">
+            <a href="/categories/数据结构与算法/">数据结构与算法</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#算法原理"><span class="toc-text">算法原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><p>Graham扫描法的基本思想是通过维护一个凸包候选点的栈S来解决凸包问题。假设现在给定一个二维平面的点集Q，要求其凸包CH(Q)，（CH(Q)表示点集Q的凸包上所有点的集合）。使用Graham扫描法的步骤如下：</p>
+<a id="more"></a>
+<ol>
+<li>找到点集Q中的一个点p0，该点是点集Q中纵坐标（y坐标）最小的点。若纵坐标最小的点有多个，那么p0是这些点中最左边的点，即横坐标（x坐标）最小的点。</li>
+<li>将点集Q中除了p0之外剩余的点，按照其与p0的极角（极坐标系下的夹角）从小到大进行排序，设为<p1，p2，...，pm>。若出现有相同极角的情况，则只保留这些极角相同的点中距离p0最远的那一个。（与《算法导论》中所描述的不同，下面实现时，保留了极角相同的点）</p1，p2，...，pm></li>
+<li>若m&lt;2，则所有凸包的候选点不足3个，找不到凸包，返回空。否则进行下一步。</li>
+<li>执行循环前，将p0，p1，p2压入栈S中。假设pt表示栈S的栈顶元素，pnt表示栈S中挨着栈顶元素的下一个元素。</li>
+<li>执行循环从i=3到m。pi表示当前访问的<p1，p2，...，pm>中的元素（尚未入栈）。</p1，p2，...，pm></li>
+<li>访问每一个元素pi时执行判断。pnt、pt、pi组成的角没有向左转时就将pt弹出栈，再进行判断，直到pnt、pt、pi组成的角向左转时为止。</li>
+<li>将pi压入栈。继续执行第5部的循环直到i&gt;m为止。</li>
+<li>栈S中从栈底到栈顶以逆时针方向保存着点集Q的凸包CH(Q)中的点。</li>
+</ol>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>在《算法导论》中给出的例子中，并没有考虑一个凸包中有三点共线的情况。但在很多OJ中，凸包中共线三点的中间点并没有从凸包中去出。因此实现时保留了相同极角的点，以及在循环判断时也考虑了三点共线的情况。在代码实现时主要有两个关键点，一个是按照极角进行排序的算法。第二个是在循环中如何判断“向左转”。</p>
+<p>先来看一下按照极角进行排序的算法。假设现在要对两个点a和b按照相对于极点o的极角进行排序。有下面两种方法可以选择。</p>
+<ol>
+<li>分别求出两个极角，然后进行比较。极角小的排在前，极角大的排在后。若极角相同，则按照它们相对于点o的距离从小到大进行排序。但是直接求出极角进行比较可能会遇到“浮点数陷阱”的情况。</li>
+<li>通过求向量oa、ob的叉乘（向量的外积）来判断，向量oa和ob的位置关系，若oa在ob的顺时针方向则将点a放在点b之前（oaXob &gt; 0）。若向量oa和ob方向相同（oaXob == 0），则按照它们相对于点o的距离从小到大进行排序。</li>
+</ol>
+<p>另外，当极角相同判断共线时，由于点o是y坐标最小的点（若有多个y坐标最小的点，o是其中x坐标最小的点），可以直接用点a和点b的纵坐标来代替求oa和ob的长度（若点a和点b的纵坐标也相同则再判断其横坐标）。</p>
+<p>对于“向左转”的判断。若角oab“向左转”，则说明向量ab在向量oa的逆时针方向，因此可以使用叉乘来判断。Graham扫描法的原定义以及网上大多数所说的极角相同时按照该点与极点的距离从小到大排序并不适宜凸包含有三点共线的所有情况。如下图中，在对点集进行预处理时按照与最低点（定义为极点）的极角从小到大进行排序，极角相同时按照与极点的距离从小到大排序后再进行扫描处理，最后得到的凸包将不包含[1,2]、[2,1]两个点。</p>
+<p><img src="/images/graham-error.png" alt="image-01" title="Graham扫描法失败的情况"></p>
+<p>这是因为在最后三个点的处理顺序依次为[2,1]、[1,2]、[0,3]。在处理[0,3]时将会使[2,1]、[1,2]从栈中弹出。要避免这样的情况就需要将极角最大的几个点（若有多个）按照距离从大到小的顺序进行处理。</p>
+<p>因此，按照极角从小到大进行排序后的点集，还需要保证点集起始位置极角相同的点要按照与极点的距离<strong>从小到大</strong>进行排序，点集末尾位置极角相同的点要按照与极点的距离<strong>从大到小</strong>进行排序。</p>
+<p>若非极角最大或者最小的几个极角相同的点，其处理顺序无论是从（按与极点的距离）从小到大还是从大到小都没有影响，因为这些点中只有与极点距离最远的点在凸包中，其余点在这两种处理顺序中都会被弹出栈。</p>
+<p>于是CPP源码实现如下。代码用于解决<a href="https://leetcode.com/problems/erect-the-fence/" target="_blank" rel="noopener">leetcode-587</a>，同时考虑了凸包中有三点共线的情况。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; o;</span><br><span class="line"><span class="comment">// 计算向量ab(x1, y1), cd(x2, y2)的外积 (x1*y2-x2*y1)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">crossProduct</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;b,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;c, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x1 = b[<span class="number">0</span>]-a[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> y1 = b[<span class="number">1</span>]-a[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> x2 = d[<span class="number">0</span>]-c[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> y2 = d[<span class="number">1</span>]-c[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">return</span> (x1*y2 - x2*y1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">comp</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cp = crossProduct(o, a, o, b);</span><br><span class="line">    <span class="keyword">if</span> (cp &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cp == <span class="number">0</span> &amp;&amp; (a[<span class="number">1</span>] &lt; b[<span class="number">1</span>] || ((a[<span class="number">1</span>] == b[<span class="number">1</span>] &amp;&amp; a[<span class="number">0</span>] &lt; b[<span class="number">0</span>]))))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initPoints</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i0 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;p.size(); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p[i][<span class="number">1</span>] &lt; p[i0][<span class="number">1</span>] || </span><br><span class="line">               (p[i][<span class="number">1</span>] == p[i0][<span class="number">1</span>] &amp;&amp; p[i][<span class="number">0</span>] &lt; p[i0][<span class="number">0</span>]))</span><br><span class="line">                i0 = i;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(p[i0], p[<span class="number">0</span>]);</span><br><span class="line">        o = p[<span class="number">0</span>];</span><br><span class="line">        sort(p.begin()+<span class="number">1</span>, p.end(), comp);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> i = p.size()<span class="number">-2</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; crossProduct(p[<span class="number">0</span>], p.back(), p[<span class="number">0</span>], p[i]) == <span class="number">0</span>)</span><br><span class="line">            --i;</span><br><span class="line">        </span><br><span class="line">        reverse(p.begin()+i+<span class="number">1</span>, p.end());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; outerTrees(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; points) &#123;</span><br><span class="line">        <span class="keyword">if</span> (points.size() &lt;= <span class="number">3</span>)</span><br><span class="line">            <span class="keyword">return</span> points;</span><br><span class="line"></span><br><span class="line">        initPoints(points);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">vector</span> &lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ret;</span><br><span class="line">        ret.push_back(points[<span class="number">0</span>]);</span><br><span class="line">        ret.push_back(points[<span class="number">1</span>]);</span><br><span class="line">        ret.push_back(points[<span class="number">2</span>]);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> t = <span class="number">2</span>; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt; points.size(); ++i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (t &gt; <span class="number">0</span> &amp;&amp; crossProduct(ret[t<span class="number">-1</span>], ret[t], ret[t<span class="number">-1</span>], points[i]) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ret.pop_back();</span><br><span class="line">                t--;</span><br><span class="line">            &#125;</span><br><span class="line">            ret.push_back(points[i]);</span><br><span class="line">            t++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>有一个方法没有用到极坐标的概念来进行排序，实现起来可能看似比较简单。这个算法在对点集进行排序之后会对点集进行两边遍历时间复杂度可能会稍微高一点，但没有经过验证。</p>
+<p><a href="https://blog.csdn.net/g21glf/article/details/80976917" target="_blank" rel="noopener">https://blog.csdn.net/g21glf/article/details/80976917</a></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="https://leetcode.com/problems/erect-the-fence/discuss/103302/Java-Graham-scan-with-adapted-sorting-to-deal-with-collinear-points" target="_blank" rel="noopener">https://leetcode.com/problems/erect-the-fence/discuss/103302/Java-Graham-scan-with-adapted-sorting-to-deal-with-collinear-points</a></p>
+<p><a href="https://blog.csdn.net/qq_39826163/article/details/83861353" target="_blank" rel="noopener">https://blog.csdn.net/qq_39826163/article/details/83861353</a></p>
+<p><a href="https://blog.csdn.net/weixin_39872717/article/details/77368234" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39872717/article/details/77368234</a></p>
+<p><a href="https://blog.csdn.net/weixin_39872717/article/details/77368234" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39872717/article/details/77368234</a></p>
+<p><a href="https://blog.csdn.net/u012328159/article/details/50808360" target="_blank" rel="noopener">https://blog.csdn.net/u012328159/article/details/50808360</a></p>
+<p><a href="https://github.com/tz28/ConvexHull/blob/master/convexhull.cpp" target="_blank" rel="noopener">https://github.com/tz28/ConvexHull/blob/master/convexhull.cpp</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1174668" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1174668</a></p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://yandongl.com/2019/09/03/convexhull-graham/">http://yandongl.com/2019/09/03/convexhull-graham/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/数据结构/">数据结构</a>
+            <a href="/tags/图形计算/">图形计算</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/09/01/num-array/">
+        <span class="next-text nav-default">数据结构积累之树状数组</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
