@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
   <head><meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
@@ -16,7 +16,10 @@
 <meta name="description" content="一个梦想成为架构师的技术小白"/><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
 <link rel="canonical" href="http://yandongl.com/archives/2018/"/>
 
-<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
 
 <script id="baidu_push">
@@ -34,15 +37,15 @@
 })();
 </script>
 <script>
-  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
 </script>
 
-    <title>归档 - Hatton's Notes
-  </title>
+    <title>Archives - Hatton's Notes
+  </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
     <a href="/." class="logo">Hatton's Notes</a>
   </div>
   <div class="mobile-navbar-icon">
@@ -54,19 +57,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">首页
+        <li class="mobile-menu-item">Home
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">归档
+        <li class="mobile-menu-item">Archives
           </li>
-      </a><a href="/tags">
-        <li class="mobile-menu-item">标签
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">分类
+        <li class="mobile-menu-item">Categories
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">关于
+        <li class="mobile-menu-item">About
           </li>
       </a></ul>
 </nav>
@@ -77,27 +80,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            首页
+            Home
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            归档
+            Archives
             </a>
         </li>
       <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            标签
+          <a class="menu-item-link" href="/tags/">
+            Tags
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            分类
+            Categories
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            关于
+            About
             </a>
         </li>
       </ul></nav>
@@ -107,7 +110,7 @@
         <div class="content-wrapper">
           <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title">
           <span class="archive-post-counter">
-            目前共计 10 篇日志
+            11 Posts In Total
           </span>
         </div>
       <div class="collection-title">
@@ -148,7 +151,7 @@
           01-21
           </span>
         <span class="archive-post-title">
-          <a href="/2018/01/21/memory-manage-on-embeded-system/" class="archive-post-link">
+          <a href="/2018/01/21/memory-manage-on-embeded-system/" class="archive-post-link">
             在低资源的嵌入式主控上进行内存管理
           </a>
         </span>
@@ -161,15 +164,15 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
-  <span class="copyright-year">&copy;2017 - 2019<span class="heart">
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
     <span class="author">Hatton.Liu</span>
@@ -183,8 +186,6 @@
     </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
-  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
-  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

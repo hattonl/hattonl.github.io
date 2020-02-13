@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
   <head><meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
@@ -16,7 +16,10 @@
 <meta name="description" content="一个梦想成为架构师的技术小白"/><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
 <link rel="canonical" href="http://yandongl.com/"/>
 
-<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
 
 <script id="baidu_push">
@@ -34,14 +37,14 @@
 })();
 </script>
 <script>
-  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
 </script>
 
-    <title>Hatton's Notes</title>
+    <title>Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
     <a href="/." class="logo">Hatton's Notes</a>
   </div>
   <div class="mobile-navbar-icon">
@@ -53,19 +56,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">首页
+        <li class="mobile-menu-item">Home
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">归档
+        <li class="mobile-menu-item">Archives
           </li>
-      </a><a href="/tags">
-        <li class="mobile-menu-item">标签
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">分类
+        <li class="mobile-menu-item">Categories
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">关于
+        <li class="mobile-menu-item">About
           </li>
       </a></ul>
 </nav>
@@ -76,27 +79,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            首页
+            Home
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            归档
+            Archives
             </a>
         </li>
       <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            标签
+          <a class="menu-item-link" href="/tags/">
+            Tags
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            分类
+            Categories
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            关于
+            About
             </a>
         </li>
       </ul></nav>
@@ -105,6 +108,25 @@
       <main id="main" class="main">
         <div class="content-wrapper">
           <div id="content" class="content"><section id="posts" class="posts"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2020/02/13/hexo-latex-test/">在Hexo中插入LaTeX公式测试</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-02-13
+        </span><span class="post-category">
+            <a href="/categories/博客优化/">博客优化</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-content"><p>在Hexo中插入LaTeX公式测试<br>
+          <div class="read-more">
+            <a href="/2020/02/13/hexo-latex-test/" class="read-more-link">Read more..</a>
+          </div>
+        </div></article>
+      <article class="post">
     <header class="post-header">
       <h1 class="post-title"><a class="post-link" href="/2019/09/07/convexhull-jarvis/">寻找凸包之Jarvis步进法</a>
         </h1>
@@ -118,9 +140,9 @@
         </div>
     </header>
 
-    <div class="post-content"><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><p>接着上一篇的Graham扫描法，现在来讨论求凸包的另一种方法，Jarvis步进法。该方法所运用的技术被成为打包（package wrapping）或包装礼物（gift wrapping）。可以这样来理解，比如说现在找到了一个点集Q中纵坐标最小的点q0（若有多个则为这些点中横坐标最小的点），那么该点一定为点集Q的凸包CH(Q)中的点。将一条绳子的一端固定在改点上，并将另一段沿着x轴方向拉直。然后逆时针方向绕点q0旋转该绳子，并使绳子始终处于紧绷状态。这样绳子在逆时针宣传的过程中所触碰到的点就是凸包CH(Q)上的点，直到绳子再次触碰到点q0。</p>
+    <div class="post-content"><p>Jarvis步进法求凸包<br>
           <div class="read-more">
-            <a href="/2019/09/07/convexhull-jarvis/" class="read-more-link">阅读更多</a>
+            <a href="/2019/09/07/convexhull-jarvis/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -137,9 +159,9 @@
         </div>
     </header>
 
-    <div class="post-content"><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><p>Graham扫描法的基本思想是通过维护一个凸包候选点的栈S来解决凸包问题。假设现在给定一个二维平面的点集Q，要求其凸包CH(Q)，（CH(Q)表示点集Q的凸包上所有点的集合）。使用Graham扫描法的步骤如下：</p>
+    <div class="post-content"><p>Graham扫描法求凸包<br>
           <div class="read-more">
-            <a href="/2019/09/03/convexhull-graham/" class="read-more-link">阅读更多</a>
+            <a href="/2019/09/03/convexhull-graham/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -156,9 +178,9 @@
         </div>
     </header>
 
-    <div class="post-content"><p>一般求数组的中一段区间的和时，常用的方法有两种。一种是直接对数组对应的区间上进行遍历，来求出该区间元素的和。另一种方法是，申明一个相同长度的数组分别存放前i项和，通过O(n)的时间复杂度得到前n项和数组，然后在每一次求数组区间和时就可以在O(1)时间复杂度内得到结果。若数组会频繁更新，上述两种方法的求和效率就会变得很低了。</p>
+    <div class="post-content"><p>树状数组<br>
           <div class="read-more">
-            <a href="/2019/09/01/num-array/" class="read-more-link">阅读更多</a>
+            <a href="/2019/09/01/num-array/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -175,10 +197,9 @@
         </div>
     </header>
 
-    <div class="post-content"><h1 id="Hello工程分析"><a href="#Hello工程分析" class="headerlink" title="Hello工程分析"></a>Hello工程分析</h1><h2 id="hello工程"><a href="#hello工程" class="headerlink" title="hello工程"></a>hello工程</h2><p>hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <div class="post-content"><p>FreedomSDK编译过程分析<br>
           <div class="read-more">
-            <a href="/2019/06/25/riscv_freedom_software_01/" class="read-more-link">阅读更多</a>
+            <a href="/2019/06/25/riscv_freedom_software_01/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -192,10 +213,9 @@
         </span></div>
     </header>
 
-    <div class="post-content"><p>image-test</p>
-<p><img src="/images/image_test_3.jpeg" title="Image1_1"></p>
+    <div class="post-content"><p>image-test<br>
           <div class="read-more">
-            <a href="/2019/01/13/image-test-post/" class="read-more-link">阅读更多</a>
+            <a href="/2019/01/13/image-test-post/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -214,7 +234,7 @@
 
     <div class="post-content"><p>切换C++刷leetcode时发现一些关于C++的基本操作都忘的差不多了，于是决定逐个记录下来。这篇事关于C++中vector操作的一些复习总结。<br>
           <div class="read-more">
-            <a href="/2018/12/19/vector-op-cpp/" class="read-more-link">阅读更多</a>
+            <a href="/2018/12/19/vector-op-cpp/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -233,7 +253,7 @@
 
     <div class="post-content"><p>计算机体系结构领域顶级会议及近三年会议官网。</p>
           <div class="read-more">
-            <a href="/2018/11/19/top-symposiums-of-computer-architecture/" class="read-more-link">阅读更多</a>
+            <a href="/2018/11/19/top-symposiums-of-computer-architecture/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
@@ -252,12 +272,12 @@
 
     <div class="post-content"><p>研究生即将进行体系结构的学习，第一步自然是补一下欠缺的知识。这两天在寝室把Verilog 硬件描述语言的基础语法过了一遍，并将语法框架按照自己的理解稍微整理了一下，为日后起到提纲和构建知识体系之用。</p>
           <div class="read-more">
-            <a href="/2018/09/07/verilog-basic-grammar/" class="read-more-link">阅读更多</a>
+            <a href="/2018/09/07/verilog-basic-grammar/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
       <article class="post">
     <header class="post-header">
-      <h1 class="post-title"><a class="post-link" href="/2018/01/21/memory-manage-on-embeded-system/">在低资源的嵌入式主控上进行内存管理</a>
+      <h1 class="post-title"><a class="post-link" href="/2018/01/21/memory-manage-on-embeded-system/">在低资源的嵌入式主控上进行内存管理</a>
         </h1>
 
       <div class="post-meta">
@@ -269,34 +289,16 @@
         </div>
     </header>
 
-    <div class="post-content"><p>在低资源的嵌入式主控上进行内存管理</p>
-<p>最近在做的一个嵌入式的项目中，需要使用到大量的内存空间对数据进行缓存。但是缓存的数据块大小的不确定的，最小可能只有20个字节，最多的能达到400多字节。并且有多少这样的数据包还是不确定的。查看了原本的实现方式，为每个包都分配了最大的字节数，也就是400，然而大部分的数据包都远小于这个值，这样的处理方式势必会造成大量的内存浪费，在低端嵌入式处理器上不太可行。所以，笔者打算实现一个动态内存分配的方法，来解决这个问题。</p>
+    <div class="post-content"><p>在低资源的嵌入式主控上进行内存管理<br>
           <div class="read-more">
-            <a href="/2018/01/21/memory-manage-on-embeded-system/" class="read-more-link">阅读更多</a>
+            <a href="/2018/01/21/memory-manage-on-embeded-system/" class="read-more-link">Read more..</a>
           </div>
         </div></article>
-      <article class="post">
-    <header class="post-header">
-      <h1 class="post-title"><a class="post-link" href="/2016/12/21/study-guide/">系统结构学习之内功修炼</a>
-        </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2016-12-21
-        </span><span class="post-category">
-            <a href="/categories/学习路线/">学习路线</a>
-            </span>
-        </div>
-    </header>
-
-    <div class="post-content"><blockquote>
-<p>廖老师说，嵌入式系统就是一个精简的计算机系统。学习嵌入式的目的，就是为了学习计算机体系结构的知识。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2016/12/21/study-guide/" class="read-more-link">阅读更多</a>
-          </div>
-        </div></article>
-      <nav class="pagination"></nav></section></div></div>
+      <nav class="pagination"><a class="next" href="/page/2/">
+        <span class="next-text">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></section></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
@@ -304,15 +306,15 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
-  <span class="copyright-year">&copy;2017 - 2019<span class="heart">
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
     <span class="author">Hatton.Liu</span>
@@ -326,8 +328,6 @@
     </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
-  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
-  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

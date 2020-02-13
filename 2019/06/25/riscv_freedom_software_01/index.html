@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
   <head><meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
@@ -16,7 +16,10 @@
 <meta name="description" content="RISCV笔记_01_FreedomSDK编译过程分析"/><meta name="keywords" content="系统结构, 编译, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
 <link rel="canonical" href="http://yandongl.com/2019/06/25/riscv_freedom_software_01/"/>
 
-<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
 
 <script id="baidu_push">
@@ -34,14 +37,14 @@
 })();
 </script>
 <script>
-  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
 </script>
 
-    <title>RISCV笔记_01_FreedomSDK编译过程分析 - Hatton's Notes</title>
+    <title>RISCV笔记_01_FreedomSDK编译过程分析 - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
     <a href="/." class="logo">Hatton's Notes</a>
   </div>
   <div class="mobile-navbar-icon">
@@ -53,19 +56,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">首页
+        <li class="mobile-menu-item">Home
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">归档
+        <li class="mobile-menu-item">Archives
           </li>
-      </a><a href="/tags">
-        <li class="mobile-menu-item">标签
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">分类
+        <li class="mobile-menu-item">Categories
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">关于
+        <li class="mobile-menu-item">About
           </li>
       </a></ul>
 </nav>
@@ -76,27 +79,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            首页
+            Home
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            归档
+            Archives
             </a>
         </li>
       <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            标签
+          <a class="menu-item-link" href="/tags/">
+            Tags
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            分类
+            Categories
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            关于
+            About
             </a>
         </li>
       </ul></nav>
@@ -119,13 +122,13 @@
     </header>
 
     <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
+    <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello工程分析"><span class="toc-text">Hello工程分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hello工程"><span class="toc-text">hello工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工程编译与下载"><span class="toc-text">工程编译与下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译过程分析"><span class="toc-text">编译过程分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖库编译metal"><span class="toc-text">依赖库编译metal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖库编译metal-gloss"><span class="toc-text">依赖库编译metal-gloss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译应用程序前的准备"><span class="toc-text">编译应用程序前的准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译Hello"><span class="toc-text">编译Hello</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol></li></ol>
     </div>
-  </div><div class="post-content"><h1 id="Hello工程分析"><a href="#Hello工程分析" class="headerlink" title="Hello工程分析"></a>Hello工程分析</h1><h2 id="hello工程"><a href="#hello工程" class="headerlink" title="hello工程"></a>hello工程</h2><p>hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行.</p>
+  </div><div class="post-content"><p>FreedomSDK编译过程分析<br><a id="more"></a></p>
+<h1 id="Hello工程分析"><a href="#Hello工程分析" class="headerlink" title="Hello工程分析"></a>Hello工程分析</h1><h2 id="hello工程"><a href="#hello工程" class="headerlink" title="hello工程"></a>hello工程</h2><p>hello工程是freedom-e-sdk中最简单的一个实例程序, 代码只有如下几行.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <p>该工程编译后在freedom上执行的效果为通过串口向主机发送一串字符<code>Hello, world!</code>。不过大家都明白，背后的“真相”并不想看上去那么简单。如上所见的代码只能算是应用层面的代码，其底层调用了C库，启动代码等屏蔽了RISCV硬件细节的BSP层。通过符合RISCV标准的交叉编译工具转化为可以在RISCV体系结构上执行的二进制代码后才能有如此神奇的效果。下面就通过分析代码的编译过程来学习一下，其底层所依赖的文件和交叉编译工具。</p>
 <h2 id="工程编译与下载"><a href="#工程编译与下载" class="headerlink" title="工程编译与下载"></a>工程编译与下载</h2><p>hello工程的基本操作</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 清除之前的编译所产生的文件</span><br><span class="line">make PROGRAM=hello TARGET=freedom-e310-arty clean</span><br><span class="line"><span class="meta">#</span> 进行编译</span><br><span class="line">make PROGRAM=hello TARGET=freedom-e310-arty software</span><br><span class="line"><span class="meta">#</span> 上传工程到开发板</span><br><span class="line">make PROGRAM=hello TARGET=freedom-e310-arty upload</span><br></pre></td></tr></table></figure>
@@ -170,7 +173,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">rm -f libriscv__menv__metal.a</span><br><span class="line">riscv64-unknown-elf-ar cru libriscv__menv__metal.a </span><br><span class="line">gloss/crt0.o </span><br><span class="line">gloss/nanosleep.o </span><br><span class="line">gloss/sys_access.o </span><br><span class="line">gloss/sys_chdir.o </span><br><span class="line">gloss/sys_chmod.o </span><br><span class="line">gloss/sys_chown.o </span><br><span class="line">gloss/sys_close.o </span><br><span class="line">gloss/sys_execve.o </span><br><span class="line">gloss/sys_exit.o </span><br><span class="line">gloss/sys_faccessat.o </span><br><span class="line">gloss/sys_fork.o </span><br><span class="line">gloss/sys_fstat.o </span><br><span class="line">gloss/sys_fstatat.o </span><br><span class="line">gloss/sys_ftime.o </span><br><span class="line">gloss/sys_getcwd.o </span><br><span class="line">gloss/sys_getpid.o </span><br><span class="line">gloss/sys_gettimeofday.o </span><br><span class="line">gloss/sys_isatty.o </span><br><span class="line">gloss/sys_kill.o </span><br><span class="line">gloss/sys_link.o </span><br><span class="line">gloss/sys_lseek.o </span><br><span class="line">gloss/sys_lstat.o </span><br><span class="line">gloss/sys_open.o </span><br><span class="line">gloss/sys_openat.o </span><br><span class="line">gloss/sys_read.o </span><br><span class="line">gloss/sys_sbrk.o </span><br><span class="line">gloss/sys_stat.o </span><br><span class="line">gloss/sys_sysconf.o </span><br><span class="line">gloss/sys_times.o </span><br><span class="line">gloss/sys_unlink.o </span><br><span class="line">gloss/sys_utime.o </span><br><span class="line">gloss/sys_wait.o </span><br><span class="line">gloss/sys_write.o </span><br><span class="line"></span><br><span class="line">riscv64-unknown-elf-ranlib libriscv__menv__metal.a</span><br></pre></td></tr></table></figure>
 <p>随后又以与上文相同的方式来生成文件libriscv__menv__metal.a</p>
 <h3 id="编译应用程序前的准备"><a href="#编译应用程序前的准备" class="headerlink" title="编译应用程序前的准备"></a>编译应用程序前的准备</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/metal.h riscv__mmachine__freedom-e310-arty.lds</span><br><span class="line">touch riscv__mmachine__freedom-e310-arty.specs</span><br><span class="line">cat /home/hatton/repos/freedom-e-sdk/freedom-metal/riscv__menv__metal.specs.in &gt; riscv__menv__metal.specs</span><br><span class="line">cp /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/metal.h metal/machine/freedom-e310-arty.h</span><br></pre></td></tr></table></figure>
-<p>当前 make 在文件夹 ‘/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/build/debug’ 下。复制 metal.h 为  <code>riscv__mmachine__freedom-e310-arty.lds</code> （这个强行更名，后面没有用，文件后缀和功能也对应不上），创建 riscv_<em>mmachin\</em>_freedom-e310-arty.specs ，将 <code>riscv__menv__metal.specs.in</code> 中的内容（一个空文件，里面啥也没有）输入到 <code>riscv__menv__metal.specs</code> 中。复制<code>metal.h</code>  为 <code>freedom-e310-arty.h</code> 。</p>
+<p>当前 make 在文件夹 ‘/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/build/debug’ 下。复制 metal.h 为  <code>riscv__mmachine__freedom-e310-arty.lds</code> （这个强行更名，后面没有用，文件后缀和功能也对应不上），创建 riscv__mmachin__freedom-e310-arty.specs ，将 <code>riscv__menv__metal.specs.in</code> 中的内容（一个空文件，里面啥也没有）输入到 <code>riscv__menv__metal.specs</code> 中。复制<code>metal.h</code>  为 <code>freedom-e310-arty.h</code> 。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">make[2]: Entering directory '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/build/debug'</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug'</span><br><span class="line"> /usr/bin/install -c -m 644  libriscv__mmachine__freedom-e310-arty.a libriscv__menv__metal.a '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug'</span><br><span class="line"> ( cd '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug' &amp;&amp; riscv64-unknown-elf-ranlib libriscv__mmachine__freedom-e310-arty.a )</span><br><span class="line"> ( cd '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug' &amp;&amp; riscv64-unknown-elf-ranlib libriscv__menv__metal.a )</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug'</span><br><span class="line"> /usr/bin/install -c -m 644 riscv__mmachine__freedom-e310-arty.lds '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug'</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include'</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include/metal'</span><br><span class="line"> /usr/bin/install -c -m 644  /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/button.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/clock.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/compiler.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/cpu.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/gpio.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/interrupt.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/io.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/itim.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/led.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/machine.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/pmp.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/shutdown.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/spi.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/switch.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/timer.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/tty.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/uart.h '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include/metal'</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include/metal/drivers'</span><br><span class="line"> /usr/bin/install -c -m 644  /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/fixed-clock.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/riscv,clint0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/riscv,cpu.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/riscv,plic0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,clic0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,fe310-g000,hfrosc.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,fe310-g000,hfxosc.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,fe310-g000,pll.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,fe310-g000,prci.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,global-external-interrupts0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,gpio-buttons.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,gpio-leds.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,gpio-switches.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,gpio0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,local-external-interrupts0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,spi0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,test0.h /home/hatton/repos/freedom-e-sdk/freedom-metal/metal/drivers/sifive,uart0.h '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include/metal/drivers'</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include/metal/machine'</span><br><span class="line"> /usr/bin/install -c -m 644  metal/machine/freedom-e310-arty.h '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/include/metal/machine'</span><br><span class="line"> /bin/mkdir -p '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug'</span><br><span class="line"> /usr/bin/install -c -m 644 riscv__mmachine__freedom-e310-arty.specs riscv__menv__metal.specs '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug'</span><br><span class="line">make[2]: Leaving directory '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/build/debug'</span><br><span class="line">make[1]: Leaving directory '/home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/build/debug'</span><br><span class="line">date &gt; /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug/stamp</span><br><span class="line">cp /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug/libriscv__mmachine__freedom-e310-arty.a /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug/libmetal.a</span><br><span class="line">cp /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug/libriscv__menv__metal.a /home/hatton/repos/freedom-e-sdk/bsp/freedom-e310-arty/install/lib/debug/libmetal-gloss.a</span><br><span class="line">mkdir -p /home/hatton/repos/freedom-e-sdk/software/hello/debug/</span><br></pre></td></tr></table></figure>
 <p>install命令与cp命令相似，都可以将文件或目录拷贝到制定的路径。但是install命令可以控制目标文件的属性。参数部分-c （ignored），-m  （set permission mode）644表示，（第一个6）当前文件的拥有者的权限，可读可写不可执行，（第一个4）当前文件的所属组（同组用户）权限，可读权限，（第二个4）当前文件的组外权限，可读权限。</p>
 <p>以上log所表示的操作为：</p>
@@ -227,15 +230,15 @@
       </div>
       <div class="post-copyright">
     <p class="copyright-item">
-      <span>原文作者: </span>
+      <span>Author: </span>
       <a href="http://yandongl.com">Hatton.Liu</a>
     </p>
     <p class="copyright-item">
-      <span>原文链接: </span>
+      <span>Link: </span>
       <a href="http://yandongl.com/2019/06/25/riscv_freedom_software_01/">http://yandongl.com/2019/06/25/riscv_freedom_software_01/</a>
     </p>
     <p class="copyright-item">
-      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
   </div>
       <footer class="post-footer">
@@ -247,15 +250,16 @@
         <nav class="post-nav"><a class="prev" href="/2019/09/01/num-array/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text nav-default">数据结构积累之树状数组</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+        <span class="prev-text nav-mobile">Prev</span>
       </a>
     <a class="next" href="/2019/01/13/image-test-post/">
         <span class="next-text nav-default">image-test-post</span>
-        <span class="prev-text nav-mobile">下一篇</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     </nav></footer>
-    </article></div><div class="comments" id="comments"></div></div>
+    </article></div><div class="comments" id="comments"><div id="gitalk-container"></div>
+    </div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
@@ -263,15 +267,15 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
-  <span class="copyright-year">&copy;2017 - 2019<span class="heart">
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
     <span class="author">Hatton.Liu</span>
@@ -282,11 +286,32 @@
       <div class="back-to-top" id="back-to-top">
         <i class="iconfont icon-up"></i>
       </div>
-    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+    </div>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css"/>
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '90cb778233425cb9a183',
+    clientSecret: 'f7410af5a26e423a3d8921cac8a2b4713ddc2c29',
+    repo: 'blogtalk',
+    owner: 'hattonl',
+    admin: ['hattonl'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
-  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
-  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

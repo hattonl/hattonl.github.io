@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="在Hexo中插入LaTeX公式测试"/><meta name="keywords" content="数学, Latex, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/02/13/hexo-latex-test/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>在Hexo中插入LaTeX公式测试 - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">在Hexo中插入LaTeX公式测试
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-02-13
+        </span><span class="post-category">
+            <a href="/categories/博客优化/">博客优化</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-安装hexo-math"><span class="toc-text">1. 安装hexo-math</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-修改配置文件"><span class="toc-text">2. 修改配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-修改博客配置文件"><span class="toc-text">2.1. 修改博客配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-修改主题配置文件"><span class="toc-text">2.2. 修改主题配置文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实践"><span class="toc-text">3. 实践</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-存在的问题"><span class="toc-text">4. 存在的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-修改1"><span class="toc-text">4.1. 修改1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-修改2"><span class="toc-text">4.2. 修改2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>在Hexo中插入LaTeX公式测试<br><a id="more"></a></p>
+<h1 id="1-安装hexo-math"><a href="#1-安装hexo-math" class="headerlink" title="1. 安装hexo-math"></a>1. 安装<code>hexo-math</code></h1><p>在hexo博客的根目录下执行如下命令，安装<code>hexo-math</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2. 修改配置文件"></a>2. 修改配置文件</h1><h2 id="2-1-修改博客配置文件"><a href="#2-1-修改博客配置文件" class="headerlink" title="2.1. 修改博客配置文件"></a>2.1. 修改博客配置文件</h2><p>接下来在你博客的配置文件<code>config.yml</code>加上如下的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">config.yml</span><br><span class="line">math:</span><br><span class="line">  engine: &apos;mathjax&apos; # or &apos;katex&apos;</span><br><span class="line">  mathjax:</span><br><span class="line">    src: custom_mathjax_source</span><br><span class="line">    config:</span><br><span class="line">      # MathJax config</span><br><span class="line">  katex:</span><br><span class="line">    css: custom_css_source</span><br><span class="line">    js: custom_js_source # not used</span><br><span class="line">    config:</span><br><span class="line">      # KaTeX config</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-修改主题配置文件"><a href="#2-2-修改主题配置文件" class="headerlink" title="2.2. 修改主题配置文件"></a>2.2. 修改主题配置文件</h2><p>在博客主题配置文件<code>config.yml</code>开启<code>mathjax</code>，不同博客主题可能修改的不太一样。我用的是even，做如下修改即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># LaTeX support (via MathJax)</span><br><span class="line">latex: true</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-实践"><a href="#3-实践" class="headerlink" title="3. 实践"></a>3. 实践</h1><p>写一篇博客，插入如下源码进行测试。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Simple inline $ a = b + c $.</span><br><span class="line"></span><br><span class="line">$$</span><br><span class="line">\frac&#123;|ax + by + c|&#125;&#123;\sqrt&#123;a^&#123;2&#125;+b^&#123;2&#125;&#125;&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>现实效果如下：</p>
+<p>Simple inline $ a = b + c $<br>$$<br>\frac{|ax + by + c|}{\sqrt{a^{2}+b^{2}}}<br>$$</p>
+<h1 id="4-存在的问题"><a href="#4-存在的问题" class="headerlink" title="4. 存在的问题"></a>4. 存在的问题</h1><p>Marked.js和MathJax共存时可能会发生一些渲染冲突。如下面的LaTeX源码，在不处理冲突时便会导致公式内的换行失效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\begin&#123;eqnarray&#125;</span><br><span class="line">\nabla\cdot\vec&#123;E&#125; &amp;=&amp; \frac&#123;\rho&#125;&#123;\epsilon_0&#125; \\</span><br><span class="line">\nabla\cdot\vec&#123;B&#125; &amp;=&amp; 0 \\</span><br><span class="line">\nabla\times\vec&#123;E&#125; &amp;=&amp; -\frac&#123;\partial B&#125;&#123;\partial t&#125; \\</span><br><span class="line">\nabla\times\vec&#123;B&#125; &amp;=&amp; \mu_0\left(\vec&#123;J&#125;+\epsilon_0\frac&#123;\partial E&#125;&#123;\partial t&#125; \right)</span><br><span class="line">\end&#123;eqnarray&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>现在<code>./node_modules/marked/lib/marked.js</code>文件内做如下修改。</p>
+<h2 id="4-1-修改1"><a href="#4-1-修改1" class="headerlink" title="4.1. 修改1"></a>4.1. 修改1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([\\`*&#123;&#125;\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
+<p>替换成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([`*\[\]()# +\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-修改2"><a href="#4-2-修改2" class="headerlink" title="4.2. 修改2"></a>4.2. 修改2</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
+<p>替换成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
+<p>执行<code>hexo clean</code>，重启hexo之后便可以看到正常的显示效果。</p>
+<p>$$<br>\begin{eqnarray}<br>\nabla\cdot\vec{E} &amp;=&amp; \frac{\rho}{\epsilon_0} \\<br>\nabla\cdot\vec{B} &amp;=&amp; 0 \\<br>\nabla\times\vec{E} &amp;=&amp; -\frac{\partial B}{\partial t} \\<br>\nabla\times\vec{B} &amp;=&amp; \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)<br>\end{eqnarray}<br>$$</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.sail.name/2018/05/31/use-mathjax-in-hexo/" target="_blank" rel="noopener">https://www.sail.name/2018/05/31/use-mathjax-in-hexo/</a></p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://yandongl.com/2020/02/13/hexo-latex-test/">http://yandongl.com/2020/02/13/hexo-latex-test/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/数学/">数学</a>
+            <a href="/tags/Latex/">Latex</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/09/07/convexhull-jarvis/">
+        <span class="next-text nav-default">寻找凸包之Jarvis步进法</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="gitalk-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css"/>
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '90cb778233425cb9a183',
+    clientSecret: 'f7410af5a26e423a3d8921cac8a2b4713ddc2c29',
+    repo: 'blogtalk',
+    owner: 'hattonl',
+    admin: ['hattonl'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

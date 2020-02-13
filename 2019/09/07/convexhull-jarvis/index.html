@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
   <head><meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
@@ -16,7 +16,10 @@
 <meta name="description" content="寻找凸包之Jarvis步进法"/><meta name="keywords" content="数据结构, 图形计算, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
 <link rel="canonical" href="http://yandongl.com/2019/09/07/convexhull-jarvis/"/>
 
-<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
 
 <script id="baidu_push">
@@ -34,14 +37,14 @@
 })();
 </script>
 <script>
-  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
 </script>
 
-    <title>寻找凸包之Jarvis步进法 - Hatton's Notes</title>
+    <title>寻找凸包之Jarvis步进法 - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
     <a href="/." class="logo">Hatton's Notes</a>
   </div>
   <div class="mobile-navbar-icon">
@@ -53,19 +56,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">首页
+        <li class="mobile-menu-item">Home
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">归档
+        <li class="mobile-menu-item">Archives
           </li>
-      </a><a href="/tags">
-        <li class="mobile-menu-item">标签
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">分类
+        <li class="mobile-menu-item">Categories
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">关于
+        <li class="mobile-menu-item">About
           </li>
       </a></ul>
 </nav>
@@ -76,27 +79,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            首页
+            Home
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            归档
+            Archives
             </a>
         </li>
       <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            标签
+          <a class="menu-item-link" href="/tags/">
+            Tags
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            分类
+            Categories
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            关于
+            About
             </a>
         </li>
       </ul></nav>
@@ -119,12 +122,12 @@
     </header>
 
     <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
+    <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#算法原理"><span class="toc-text">算法原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
     </div>
-  </div><div class="post-content"><h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><p>接着上一篇的Graham扫描法，现在来讨论求凸包的另一种方法，Jarvis步进法。该方法所运用的技术被成为打包（package wrapping）或包装礼物（gift wrapping）。可以这样来理解，比如说现在找到了一个点集Q中纵坐标最小的点q0（若有多个则为这些点中横坐标最小的点），那么该点一定为点集Q的凸包CH(Q)中的点。将一条绳子的一端固定在改点上，并将另一段沿着x轴方向拉直。然后逆时针方向绕点q0旋转该绳子，并使绳子始终处于紧绷状态。这样绳子在逆时针宣传的过程中所触碰到的点就是凸包CH(Q)上的点，直到绳子再次触碰到点q0。</p>
-<a id="more"></a>
+  </div><div class="post-content"><p>Jarvis步进法求凸包<br><a id="more"></a></p>
+<h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><p>接着上一篇的Graham扫描法，现在来讨论求凸包的另一种方法，Jarvis步进法。该方法所运用的技术被成为打包（package wrapping）或包装礼物（gift wrapping）。可以这样来理解，比如说现在找到了一个点集Q中纵坐标最小的点q0（若有多个则为这些点中横坐标最小的点），那么该点一定为点集Q的凸包CH(Q)中的点。将一条绳子的一端固定在改点上，并将另一段沿着x轴方向拉直。然后逆时针方向绕点q0旋转该绳子，并使绳子始终处于紧绷状态。这样绳子在逆时针宣传的过程中所触碰到的点就是凸包CH(Q)上的点，直到绳子再次触碰到点q0。</p>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>在原算法中给出的例子中，同样没有考虑共线的情况。下面以解决<a href="https://leetcode.com/problems/erect-the-fence/" target="_blank" rel="noopener">leetcode-587</a>为例来实现寻找凸包的Jarvis步进算法。算法实现时，没有采用《算法导论》中分别构造左链和右链的方法，也没有显示的计算极角。</p>
 <ol>
 <li>找到点集Q中的最低点p0，该点一定是凸包CH(Q)中的点。令pc=p0。</li>
@@ -140,15 +143,15 @@
       </div>
       <div class="post-copyright">
     <p class="copyright-item">
-      <span>原文作者: </span>
+      <span>Author: </span>
       <a href="http://yandongl.com">Hatton.Liu</a>
     </p>
     <p class="copyright-item">
-      <span>原文链接: </span>
+      <span>Link: </span>
       <a href="http://yandongl.com/2019/09/07/convexhull-jarvis/">http://yandongl.com/2019/09/07/convexhull-jarvis/</a>
     </p>
     <p class="copyright-item">
-      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
   </div>
       <footer class="post-footer">
@@ -157,13 +160,19 @@
             <a href="/tags/图形计算/">图形计算</a>
             </div>
         
-        <nav class="post-nav"><a class="next" href="/2019/09/03/convexhull-graham/">
+        <nav class="post-nav"><a class="prev" href="/2020/02/13/hexo-latex-test/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">在Hexo中插入LaTeX公式测试</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    <a class="next" href="/2019/09/03/convexhull-graham/">
         <span class="next-text nav-default">寻找凸包之Graham扫描法</span>
-        <span class="prev-text nav-mobile">下一篇</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     </nav></footer>
-    </article></div><div class="comments" id="comments"></div></div>
+    </article></div><div class="comments" id="comments"><div id="gitalk-container"></div>
+    </div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
@@ -171,15 +180,15 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
-  <span class="copyright-year">&copy;2017 - 2019<span class="heart">
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
     <span class="author">Hatton.Liu</span>
@@ -190,11 +199,32 @@
       <div class="back-to-top" id="back-to-top">
         <i class="iconfont icon-up"></i>
       </div>
-    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+    </div>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css"/>
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '90cb778233425cb9a183',
+    clientSecret: 'f7410af5a26e423a3d8921cac8a2b4713ddc2c29',
+    repo: 'blogtalk',
+    owner: 'hattonl',
+    admin: ['hattonl'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
-  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
-  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
