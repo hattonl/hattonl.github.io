@@ -13,8 +13,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="image-test-post"/><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
-<link rel="canonical" href="http://yandongl.com/2019/01/13/image-test-post/"/>
+<meta name="description" content="在Hexo中插入Gitalk"/><meta name="keywords" content="Gitalk, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/02/13/hexo-gitalk/"/>
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
     MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
@@ -40,7 +40,7 @@
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
 </script>
 
-    <title>image-test-post - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <title>在Hexo中插入Gitalk - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -109,29 +109,31 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">image-test-post
+      <h1 class="post-title">在Hexo中插入Gitalk
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-01-13
-        </span></div>
+          2020-02-13
+        </span><span class="post-category">
+            <a href="/categories/博客优化/">博客优化</a>
+            </span>
+        </div>
     </header>
 
-    <div class="post-content"><p>image-test<br><a id="more"></a></p>
-<p><img src="/images/image_test_3.jpeg" title="Image1_1"></p>
-<p>图片3 markdown访问<br><img src="/images/image_test_3.jpeg" alt="image3" title="markdown访问"></p>
-<p>标签化访问图片2</p>
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-在Github上创建一个用来存放评论的Repo"><span class="toc-text">1. 在Github上创建一个用来存放评论的Repo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-注册一个Github-OAuth-application"><span class="toc-text">2. 注册一个Github OAuth application</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-配置Gitalk"><span class="toc-text">3. 配置Gitalk</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>在Even主题下配置Gitalk评论系统<br><a id="more"></a></p>
+<p>Gitalk 是一款基于 Github 通过调用 API 使用 Github 上仓库的 Issues 搭建出来的评论系统。正巧下载的最新的even主题上自带了Gitalk，索性就配置一下直接使用了。</p>
+<h1 id="1-在Github上创建一个用来存放评论的Repo"><a href="#1-在Github上创建一个用来存放评论的Repo" class="headerlink" title="1. 在Github上创建一个用来存放评论的Repo"></a>1. 在Github上创建一个用来存放评论的Repo</h1><p>Gitalk只会使用到Repo中的Issues部分，又因为这个博客本身就是使用Github Page搭建的，直接和博客使用同一个Repo就好。</p>
+<h1 id="2-注册一个Github-OAuth-application"><a href="#2-注册一个Github-OAuth-application" class="headerlink" title="2. 注册一个Github OAuth application"></a>2. 注册一个Github OAuth application</h1><p>在Github页面右上角点击自己的头上，然后下拉菜单依次选择 <code>Settings</code> -&gt; <code>Developer settings</code> -&gt; <code>OAuth Apps</code>。<br>点击 <code>New OAuth App</code> 创建一个新的 OAuth application。<code>Homepage URL</code> 和 <code>Authorization callback URL</code> 填网站的地址，其余两个，一个名称，一个简介随便写下即可。创建成功之后获得的 <code>Client ID</code> 和 <code>Client Secret</code> 要记下来，下一步将会用到。</p>
+<center><img src="https://hatton-blog-images.oss-cn-hangzhou.aliyuncs.com/hexo-gitalk.png" alt="image-hexo-gitalk" style="zoom: 50%;"></center>
 
-<p>图片2</p>
-<div align="right"><img src="image_test_2.jpeg" alt="image2" title="markdown 格式访问"></div>
-
-
-<p>图片1<br><img src="image_test_1.jpeg" alt="image1"></p>
-<p>标签化方法访问图片1</p>
-<img src="/2019/01/13/image-test-post/image_test_1.jpeg" width="150" height="84" title="Image1 left">
-<p>标签2访问图片1</p>
-<p><img src="image_test_1.jpeg" width="20%" height="20%" title="Image1_1" align="center"></p>
+<h1 id="3-配置Gitalk"><a href="#3-配置Gitalk" class="headerlink" title="3. 配置Gitalk"></a>3. 配置Gitalk</h1><p>在主题下的配置文件中进行添加如下内容进行修改。<code>github_id</code> 和 <code>admin_user</code> 填写Github账号的用户名，<code>Client ID</code> 和 <code>Client Secret</code> 在创建 <code>OAuth App</code> 时已经获得，在此处填写即可。<code>repo</code> 用来指定使用哪个仓库的 <code>Issue</code> 部分来存储评论，填写其仓库名称即可。这里使用了和 <code>Github Page</code> 相同的仓库。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">gitalk:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  github_id:</span> <span class="string">hattonl</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">hattonl.github.io</span></span><br><span class="line"><span class="attr">  client_id:</span> <span class="number">901</span><span class="string">b7782b892acaca183</span></span><br><span class="line"><span class="attr">  client_secret:</span> <span class="string">f7410af0cb97823a3d0921cac8a2b47aca854c29</span></span><br><span class="line"><span class="attr">  admin_user:</span> <span class="string">hattonl</span></span><br><span class="line"><span class="attr">  distraction_free_mode:</span> <span class="literal">true</span> <span class="comment"># Facebook-like distraction free mode</span></span><br><span class="line">  <span class="comment"># Gitalk's display language depends on user's browser or system environment</span></span><br><span class="line">  <span class="comment"># If you want everyone visiting your site to see a uniform language, you can set a force language value</span></span><br><span class="line">  <span class="comment"># Available values: en, es-ES, fr, ru, zh-CN, zh-TW</span></span><br><span class="line"><span class="attr">  language:</span></span><br></pre></td></tr></table></figure>
 
       </div>
       <div class="post-copyright">
@@ -141,21 +143,19 @@
     </p>
     <p class="copyright-item">
       <span>Link: </span>
-      <a href="http://yandongl.com/2019/01/13/image-test-post/">http://yandongl.com/2019/01/13/image-test-post/</a>
+      <a href="http://yandongl.com/2020/02/13/hexo-gitalk/">http://yandongl.com/2020/02/13/hexo-gitalk/</a>
     </p>
     <p class="copyright-item">
       <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
   </div>
       <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/Gitalk/">Gitalk</a>
+            </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/06/25/riscv_freedom_software_01/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">RISCV笔记_01_FreedomSDK编译过程分析</span>
-        <span class="prev-text nav-mobile">Prev</span>
-      </a>
-    <a class="next" href="/2018/12/19/vector-op-cpp/">
-        <span class="next-text nav-default">C++中的vector操作</span>
+        <nav class="post-nav"><a class="next" href="/2020/02/13/hexo-latex-test/">
+        <span class="next-text nav-default">在Hexo中插入LaTeX公式测试</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
