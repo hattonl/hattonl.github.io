@@ -40,7 +40,7 @@
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
 </script>
 
-    <title>Tags - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <title>標籤 - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -56,19 +56,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">Home
+        <li class="mobile-menu-item">首頁
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">Archives
+        <li class="mobile-menu-item">歸檔
           </li>
       </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags
+        <li class="mobile-menu-item">標籤
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories
+        <li class="mobile-menu-item">分類
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">About
+        <li class="mobile-menu-item">關於
           </li>
       </a></ul>
 </nav>
@@ -79,27 +79,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            Home
+            首頁
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            Archives
+            歸檔
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/tags/">
-            Tags
+            標籤
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            Categories
+            分類
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            About
+            關於
             </a>
         </li>
       </ul></nav>
@@ -109,12 +109,12 @@
         <div class="content-wrapper">
           <div id="content" class="content"><div class="tag-cloud">
     <div class="tag-cloud-title">
-      12 Tags In Total
+      目前總計 12 個標籤
     </div>
     <div class="tag-cloud-tags">
-      <a href="/tags/系统结构/" style="font-size: 28px;">系统结构</a> <a href="/tags/Gitalk/" style="font-size: 16px;">Gitalk</a> <a href="/tags/图形计算/" style="font-size: 20px;">图形计算</a> <a href="/tags/数学/" style="font-size: 16px;">数学</a> <a href="/tags/Latex/" style="font-size: 16px;">Latex</a> <a href="/tags/嵌入式/" style="font-size: 24px;">嵌入式</a> <a href="/tags/数据结构/" style="font-size: 24px;">数据结构</a> <a href="/tags/计划/" style="font-size: 24px;">计划</a> <a href="/tags/树/" style="font-size: 16px;">树</a> <a href="/tags/编译/" style="font-size: 16px;">编译</a> <a href="/tags/Leetcode/" style="font-size: 16px;">Leetcode</a> <a href="/tags/FPGA/" style="font-size: 16px;">FPGA</a>
+      <a href="/tags/系统结构/" style="font-size: 28px;">系统结构</a> <a href="/tags/数据结构/" style="font-size: 24px;">数据结构</a> <a href="/tags/Gitalk/" style="font-size: 16px;">Gitalk</a> <a href="/tags/数学/" style="font-size: 16px;">数学</a> <a href="/tags/Latex/" style="font-size: 16px;">Latex</a> <a href="/tags/嵌入式/" style="font-size: 24px;">嵌入式</a> <a href="/tags/图形计算/" style="font-size: 20px;">图形计算</a> <a href="/tags/计划/" style="font-size: 24px;">计划</a> <a href="/tags/树/" style="font-size: 16px;">树</a> <a href="/tags/编译/" style="font-size: 16px;">编译</a> <a href="/tags/Leetcode/" style="font-size: 16px;">Leetcode</a> <a href="/tags/FPGA/" style="font-size: 16px;">FPGA</a>
     </div>
-  </div></div><div class="comments" id="comments"><div id="gitalk-container"></div>
+  </div></div><div class="comments" id="comments"><div id="utterances-container"></div>
     </div></div>
       </main>
 
@@ -123,11 +123,11 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 技術提供
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    主題 - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
@@ -142,30 +142,19 @@
       <div class="back-to-top" id="back-to-top">
         <i class="iconfont icon-up"></i>
       </div>
-    </div>
-<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
 
-
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css"/>
-
-
-<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
-
-<script>
-  var gitalk = new Gitalk({
-    clientID: '90cb778233425cb9a183',
-    clientSecret: 'f7410af5a26e423a3d8921cac8a2b4713ddc2c29',
-    repo: 'hattonl.github.io',
-    owner: 'hattonl',
-    admin: ['hattonl'],
-    id: md5(location.pathname),
-    
-      language: window.navigator.language || window.navigator.userLanguage,
-    
-    distractionFreeMode: 'true'
-  });
-  gitalk.render('gitalk-container');
-</script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
