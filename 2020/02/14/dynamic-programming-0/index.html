@@ -56,19 +56,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">Home
+        <li class="mobile-menu-item">首頁
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">Archives
+        <li class="mobile-menu-item">歸檔
           </li>
       </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags
+        <li class="mobile-menu-item">標籤
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories
+        <li class="mobile-menu-item">分類
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">About
+        <li class="mobile-menu-item">關於
           </li>
       </a></ul>
 </nav>
@@ -79,27 +79,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            Home
+            首頁
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            Archives
+            歸檔
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/tags/">
-            Tags
+            標籤
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            Categories
+            分類
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            About
+            關於
             </a>
         </li>
       </ul></nav>
@@ -122,7 +122,7 @@
     </header>
 
     <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">Contents</h2>
+    <h2 class="post-toc-title">文章目錄</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-动态规划概念"><span class="toc-text">1. 动态规划概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-经典问题"><span class="toc-text">2. 经典问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#最长上升子序列"><span class="toc-text">最长上升子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公共最长子序列"><span class="toc-text">公共最长子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数字三角形"><span class="toc-text">数字三角形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最大子序列和"><span class="toc-text">最大子序列和</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-状态的多维表示"><span class="toc-text">3. 状态的多维表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mobile-Service"><span class="toc-text">Mobile Service</span></a></li></ol></li></ol></li></ol>
     </div>
@@ -191,22 +191,22 @@
 <p>给出N个请求，请求发生的位置分别为 $p_1\sim p_N$。公司必须按顺序依次满足所有请求，目标是最小化公司花费，请你帮忙计算这个最小花费。$N\leq 1000$，位置是 1~200 的整数。</p>
 <p><strong>分析</strong></p>
 <p>DP的阶段解释已经完成的请求数量。要计划花费就需要知道三个服务员的位置，那么状态就可以表示为$F[i, x, y, z]$，表示完成了前 $i$ 个请求，三个员工分别位于 $x, y, z$ 时，公司当前最小花费。状态转移如下：<br>$$<br>F[i+1][p_{i+1}][y][z] = min(F[i+1][p_{i+1}][y][z],\;F[i][x][y][z] + c(x, p_{i+1})) \\<br>F[i+1][x][p_{i+1}][z] = min(F[i+1][x][p_{i+1}][z],\;F[i][x][y][z] + c(y, p_{i+1}))     \\<br>F[i+1][x][y][p_{i+1}] = min(F[i+1][x][y][p_{i+1}],\;F[i][x][y][z] + c(z, p_{i+1}))<br>$$<br>初始值：$F[0][1][2][3] = 0$ ，目标：$max\{F[n][?][?][?]\}$。</p>
-<p>状态压缩：$ F[i][p_i][y][z]$ 在处理好第 $i$ 个请求之后，必有一个员工在位置 $p_i$。因此，状态可以缩小一维。</p>
+<p><strong>状态压缩</strong>：$ F[i][p_i][y][z]$ 在处理好第 $i$ 个请求之后，必有一个员工在位置 $p_i$。因此，状态可以缩小一维。</p>
 <p>$F[i][x][y]$  表示在处理好第 $i$ 个请求后，有一个员工在 $p_i$ 另外两个员工在 $x, y$ 时的最小花费。于是有状态转移如下：<br>$$<br>F[i+1][x][y]  = min(F[i+1][x][y],\;F[i][x][y] + c(p[i], p[i+1]));    //p[i+1] x y 互不相等\\<br>F[i+1][p_i][y] = min(F[i+1][p_i][y],\;F[i][x][y] + c(x, p[i+1]));       //p[i+1] pi y 互不相等\\<br>F[i+1][x][p_i] = min(F[i+1][x][p_i],\;F[i][x][y] + c(y, p[i+1]));       //p[i+1]  pi x 互不相等<br>$$<br>初始值：$F[0][1][2] = 0$，令$p_0 = 3$，目标：$max\{F[n][?][?]\}$。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> L = <span class="number">206</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> l, n;  <span class="comment">// 位置数、请求数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> c[L][L];</span><br><span class="line"><span class="keyword">int</span> p[N];</span><br><span class="line"><span class="keyword">int</span> f[N][L][L];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x!=y &amp;&amp; y!=z &amp;&amp; z!=x)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f, <span class="number">0x3f</span>, <span class="keyword">sizeof</span>(f));</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;l, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= l; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= l; ++j) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;c[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;p[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    f[<span class="number">0</span>][<span class="number">1</span>][<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">    p[<span class="number">0</span>] = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n<span class="number">-1</span>; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">1</span>; x &lt;= l; ++x) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">1</span>; y &lt;= l; ++y) &#123;</span><br><span class="line">                <span class="keyword">if</span> (f[i][x][y] != INF) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (check(p[i+<span class="number">1</span>], x, y)) &#123;</span><br><span class="line">                        f[i+<span class="number">1</span>][x][y] = min(f[i+<span class="number">1</span>][x][y], f[i][x][y] + c[p[i]][p[i+<span class="number">1</span>]]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (check(p[i+<span class="number">1</span>], p[i], y)) &#123;</span><br><span class="line">                        f[i+<span class="number">1</span>][p[i]][y] = min(f[i+<span class="number">1</span>][p[i]][y], f[i][x][y] + c[x][p[i+<span class="number">1</span>]]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (check(p[i+<span class="number">1</span>], p[i], x)) &#123;</span><br><span class="line">                        f[i+<span class="number">1</span>][x][p[i]] = min(f[i+<span class="number">1</span>][x][p[i]], f[i][x][y] + c[y][p[i+<span class="number">1</span>]]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">1</span>; x &lt;= l; ++x) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">1</span>; y &lt;= l; ++y) &#123;</span><br><span class="line">            ans = min(ans, f[n][x][y]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       </div>
       <div class="post-copyright">
     <p class="copyright-item">
-      <span>Author: </span>
+      <span>原文作者: </span>
       <a href="http://yandongl.com">Hatton.Liu</a>
     </p>
     <p class="copyright-item">
-      <span>Link: </span>
+      <span>原文鏈結: </span>
       <a href="http://yandongl.com/2020/02/14/dynamic-programming-0/">http://yandongl.com/2020/02/14/dynamic-programming-0/</a>
     </p>
     <p class="copyright-item">
-      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+      <span>授權: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
   </div>
       <footer class="post-footer">
@@ -214,9 +214,14 @@
             <a href="/tags/动态规划/">动态规划</a>
             </div>
         
-        <nav class="post-nav"><a class="next" href="/2020/02/13/hexo-gitalk/">
+        <nav class="post-nav"><a class="prev" href="/2020/02/15/dynamic-programming-1/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">动态规划（二）背包问题</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2020/02/13/hexo-gitalk/">
         <span class="next-text nav-default">在Hexo中插入Gitalk</span>
-        <span class="prev-text nav-mobile">Next</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
     </nav></footer>
@@ -229,11 +234,11 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 技術提供
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    主題 - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 

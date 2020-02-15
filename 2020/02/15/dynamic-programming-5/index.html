@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="动态规划（六）状态压缩DP"/><meta name="keywords" content="动态规划, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/02/15/dynamic-programming-5/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>动态规划（六）状态压缩DP - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首頁
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">歸檔
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">標籤
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分類
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">關於
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首頁
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            歸檔
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            標籤
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            分類
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            關於
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">动态规划（六）状态压缩DP
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-02-15
+        </span><span class="post-category">
+            <a href="/categories/数据结构与算法/">数据结构与算法</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目錄</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最短Hamilton路径"><span class="toc-text">最短Hamilton路径</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mondriaan’s-Dream"><span class="toc-text">Mondriaan’s Dream</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p><strong>状态压缩</strong>动态动态规划算法指的是把记录动态规划中“状态”的集合转化为<strong>整数</strong>的一类算法。</p>
+<a id="more"></a>
+<p>在动态规划的每个阶段，我们需要在动态规划的“状态”中记录若干个集合，来保存动态规划中的“轮廓”，以方便进行状态转移。若集合大小不超过 $N$，集合中的每个元素都是小于 $K$ 的自然数，则可以把这个集合看作一个 $N$ 位 $K$ 进制数，以一个 $[0, K^N-1]$ 之间的十进制证书的形式来进行状态存储。比较常用的是二进制的状态压缩。</p>
+<h1 id="最短Hamilton路径"><a href="#最短Hamilton路径" class="headerlink" title="最短Hamilton路径"></a>最短Hamilton路径</h1><p><strong>问题</strong></p>
+<p>给定一张 $n(n \leq 20)$ 个点的带权无向图，点从 $0 \sim n-1$ 标号，求起点 0 到终点 $n-1$ 的最短 Hamilton 路径。 Hamilton 路径的定义是从 0 到 $n-1$ 不重不漏地经过每个点恰好一次。</p>
+<p><strong>输入描述：</strong></p>
+<p>第一行一个整数$n$。接下来 $n$ 行每行 $n$ 个整数，其中第 $i$ 行第 $j$ 个整数表示点 $i$ 到 $j$ 的距离（一个不超过$10^7$ 的正整数，记为 $a[i,j]$）。对于任意的 $x,y,z$ ，数据保证 $a[x,x]=0，a[x,y]=a[y,x]$ 并且$a[x,y]+a[y,z] \geq a[x,z]$。</p>
+<p><strong>输出描述:</strong></p>
+<p>一个整数，表示最短 Hamilton 路径的长度。</p>
+<p><strong>分析</strong></p>
+<p>使用状态压缩的动态规划进行求解。$f[(1&lt;&lt;n)][n]$  第一维使用了状态压缩表示了 目前已经经历过节点，第二维表示，在该状态下最后访问的一个节点。</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> weight[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">int</span> f[<span class="number">1</span>&lt;&lt;<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hamilton</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f, <span class="number">0x3f</span>, <span class="keyword">sizeof</span>(f));</span><br><span class="line">    f[<span class="number">1</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i  &lt; (<span class="number">1</span>&lt;&lt;n); ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n; ++j)  &#123;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="number">1</span>&lt;&lt;j)&amp;i) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k) &#123;  <span class="comment">// k从0开始</span></span><br><span class="line">                        <span class="keyword">if</span> (i&amp;(<span class="number">1</span>&lt;&lt;k))</span><br><span class="line">                        f[i][j] = min(f[i][j], f[i^(<span class="number">1</span>&lt;&lt;j)][k]+weight[k][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[(<span class="number">1</span>&lt;&lt;n)<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Mondriaan’s-Dream"><a href="#Mondriaan’s-Dream" class="headerlink" title="Mondriaan’s Dream"></a>Mondriaan’s Dream</h1><p><strong>问题</strong></p>
+<p><a href="https://ac.nowcoder.com/acm/contest/1046/A" target="_blank" rel="noopener">牛客网链接</a></p>
+<p>简化后问题，求把高为 $h$ 宽为 $w$ $（1 &lt;= h,w &lt;= 11）$ 的棋盘分割成若干个宽和高分别为 1 和 2 的长方形，有多少种方案。</p>
+<p><img src="https://hatton-blog-images.oss-cn-hangzhou.aliyuncs.com/dp-mondriaan.gif" alt="dp"></p>
+<p><strong>分析</strong></p>
+<p>从上向下对长方形进行填充，将行号作为阶段。将该行的填充状态作为 DP 的状态。$f[i][j]$ 表示填充到了第 $i$ 行，第 $i$ 行的填充状态为 $j$ 的情况下有多少种方案。$j$ 使用位压缩的形式。 $j$ 的 bit 位从低到高分别代表棋盘中该行从右到左的填充情况。若该格是平躺的长方形，或者是竖直长方形的下半部分，则为 0。若是竖直长方形的下班部分则为 1。</p>
+<p>第 $j-1$行的形态 $k$ 能够转移到第 $i$ 行的形态 $j$，当且仅当：</p>
+<ol>
+<li>$j$ 和 $k$ 执行按位与运算的结果是0。这保证了每个数字1的下方必须是数字0，代表继续补全竖着的1*2长方形。</li>
+<li>$j$ 和 $k$ 执行按位或运算的结果的二进制表示中，每一段的连续的 0 都必须有偶数个。这些 0 代表若干个横着的1*2 长方形，奇数个 0 无法分割这种形态。</li>
+</ol>
+<p>另集合 $S$ 表示所有符合每一段连续的0都是偶数的所有二进制数。则有状态转移方程。<br>$$<br>F[i,j] = \sum \limits_{j\&amp;k=0\;and\;j|k\in S}F[i-1,k]<br>$$<br><strong>初值：</strong>$F[0, 0] = 1$，其余为 0，<strong>目标：</strong>$F[N, 0]$</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> h, w;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> f[<span class="number">12</span>][<span class="number">1</span>&lt;&lt;<span class="number">11</span>];</span><br><span class="line"><span class="keyword">int</span> in_s[<span class="number">1</span>&lt;&lt;<span class="number">11</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;h, &amp;w) == <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (h == <span class="number">0</span> || w == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="number">1</span>&lt;&lt;w); ++i) &#123;</span><br><span class="line">            <span class="keyword">bool</span> cnt = <span class="number">0</span>, has_odd = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; w; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> ((<span class="number">1</span>&lt;&lt;j)&amp;i) has_odd |= cnt, cnt = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">else</span> cnt^=<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            has_odd |= cnt;    <span class="comment">// 处理最后一个</span></span><br><span class="line">            in_s[i] = !has_odd;</span><br><span class="line">        &#125;</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;   <span class="comment">// 目标：f[h][0];</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= h; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="number">1</span>&lt;&lt;w); ++j) &#123;</span><br><span class="line">                f[i][j] = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; (<span class="number">1</span>&lt;&lt;w); ++k) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (((j&amp;k)==<span class="number">0</span>) &amp;&amp; in_s[j|k]) &#123;        </span><br><span class="line">                        f[i][j] += f[i<span class="number">-1</span>][k];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, f[h][<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文鏈結: </span>
+      <a href="http://yandongl.com/2020/02/15/dynamic-programming-5/">http://yandongl.com/2020/02/15/dynamic-programming-5/</a>
+    </p>
+    <p class="copyright-item">
+      <span>授權: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/动态规划/">动态规划</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2020/02/15/dynamic-programming-4/">
+        <span class="next-text nav-default">动态规划（五）环形DP</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 技術提供
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主題 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
