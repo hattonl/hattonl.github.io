@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="数据结构进阶（二）树状数组"/><meta name="keywords" content="数据结构进阶, 树, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/02/15/data-structure-ii-num-array/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>数据结构进阶（二）树状数组 - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">数据结构进阶（二）树状数组
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-02-15
+        </span><span class="post-category">
+            <a href="/categories/数据结构与算法/">数据结构与算法</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本思想"><span class="toc-text">基本思想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现代码"><span class="toc-text">实现代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#树状数组与逆序对"><span class="toc-text">树状数组与逆序对</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#区间增加的树状数组"><span class="toc-text">区间增加的树状数组</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>树状数组是一种支持<strong>单点增加</strong>的维护前缀和（区间和）的数据结构。<br><a id="more"></a></p>
+<p>一般求数组的中一段区间的和时，常用的方法有两种。一种是直接对数组对应的区间上进行遍历，来求出该区间元素的和。另一种方法是，申明一个相同长度的数组分别存放前i项和，通过 $O(n)$ 的时间复杂度得到前n项和数组，然后在每一次求数组区间和时就可以在 $O(1)$ 时间复杂度内得到结果。若数组会频繁更新，上述两种方法的求和效率就会变得很低了。</p>
+<p>Binary Indexed Trees（简称BIT）又称为树状数组，主要用于解决对于一个频繁更新的数组求前 $n$ 项和（区间和）的问题。其查询和修改复杂度都为 $O(logn)$。树状数组可以在 $O(logn)$ 的时间复杂度内完成对数组值的更新，同时也可以在 $O(logn)$ 的时间复杂度内完成对数组的区间求和。</p>
+<h1 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h1><p>树状数组的基本思想是，在树状数组中，每个元素保存原数组中一个或者多个连续的元素的和。在求数组区间的和时，只需要将树状数组中部分元素相加即可。</p>
+<p>为了理清树状数组的工作原理，现在假设有一个长度为16的数组<code>nums</code>。在C++中表示如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> nums[<span class="number">16</span>] = &#123;<span class="number">3</span>, <span class="number">2</span>, <span class="number">-1</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span> <span class="number">-3</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">-1</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">2</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>为了解释方便，现在假设该数组以下标从1开始时的表示为<code>A[1...n]</code>。树状数组为<code>C[1...n]</code>。则树状数组中每个元素所保存的值与原数组的对应关系如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C1 = A1</span><br><span class="line">C2 = A1 + A2</span><br><span class="line">C3 = A3</span><br><span class="line">C4 = A1 + A2 + A3 + A4</span><br><span class="line">C5 = A5</span><br><span class="line">C6 = A5 + A6</span><br><span class="line">C7 = A7</span><br><span class="line">C8 = A1 + A2 + A3 + A4 + A5 + A6 + A7 + A8</span><br><span class="line">...</span><br><span class="line">C16 = A1 + A2 + A3 + A4 + A5 + A6 + A7 + A8 + A9 + A10 + A11 + A12 + A13 + A14 + A15 + A16</span><br></pre></td></tr></table></figure>
+<p>但从上面的等式中不容易发现规律，将其下标化为二进制表示如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C001 = A001</span><br><span class="line">C010 = A001 + A010</span><br><span class="line">C011 = A011</span><br><span class="line">C100 = A001 + A010 + A011 + A100</span><br><span class="line">C101 = A101</span><br><span class="line">C110 = A101 + A110</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>假设在树状数组中有一个节点 <code>Cx</code> 编号为 <code>x</code> ， <code>x</code> 二进制表示时末尾0的个数为<code>k</code>，则该节点表示的<code>2^k</code>个原数组中连续元素，并且以Ax结尾，即<code>Cn = A(n – 2^k + 1) + ... + An</code>。</p>
+<p>借用<a href="[https://baike.baidu.com/item/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84](https://baike.baidu.com/item/树状数组">百度百科</a>)上的图片，当原数组的元素个数为16时，可视化的表示如下。</p>
+<p><img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=08d4c8271c4c510fbac9ea4801304e48/960a304e251f95ca5e588459cf177f3e660952ab.jpg" alt="img"></p>
+<p>按照树状数组中的结构，若要计算数组A的前15项的和，则只需要计算出<code>C[15]+C[14]+C[12]+C[8]</code>。计算数组A的前16项和，则只需要计算出<code>C[16]</code>。</p>
+<p>此时，来看看下标15、14、12、8之间有什么规律。这四个数的二进制表示为<code>1111</code>、<code>1110</code>、<code>1100</code>、<code>1000</code>。再结合上文中所描述，树状数组中每个元素中所表示的特点可知，若要求前n项和的方法如下。其中<code>idx -= (idx &amp; -idx);</code>为idx去掉其二进制表示时最右侧的1来得到下一个idx的值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算数组nums_下标为0到下标为i的所有元素的和。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (idx &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        sum += tree_[idx];</span><br><span class="line">        idx -= (idx &amp; -idx);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与获得前n项和的原理相同，若原数组中有需要更新时，则需要将树状数组中包含该节点值的元素都做更新。根据树状数组数据结构的特点，从下标idx开始，依次使其二进制表示时最右侧为1的位置加1即可得到所有需要在树状数组中更新的元素的下标。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将数组nums_下标为i的元素更新为val，同时更新树状数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> tem = val-nums_[i];</span><br><span class="line">    nums_[i] = val;</span><br><span class="line">    <span class="keyword">while</span> (idx &lt;= maxidx_) &#123;</span><br><span class="line">        tree_[idx] += tem;</span><br><span class="line">        idx += (idx &amp; -idx);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了用于求可变数组的区间和之外，树状数组还可用于求原数组中在一定区间内出现的频率问题（累计频率问题），如数组中某元素右侧大于该元素的元素个数有多少个。例<a href="https://leetcode.com/problems/range-sum-query-mutable/" target="_blank" rel="noopener">leetcode-307</a>、<a href="https://leetcode.com/problems/reverse-pairs/" target="_blank" rel="noopener">leetcode-493</a>等。</p>
+<h1 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h1><p>实现代码中，数组<code>num_</code>保存了原数组的值，树状数组为<code>tree_</code>，其中<code>tree_[0]</code>起到占位的作用，没有保存元素信息。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x&amp;(-x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    NumArray(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        maxidx_ = nums.size();</span><br><span class="line">        nums_ = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(maxidx_, <span class="number">0</span>);</span><br><span class="line">        tree_ = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(maxidx_ + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); ++i)</span><br><span class="line">            update(i, nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将数组nums_下标为i的元素更新为val，同时更新树状数组</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> tem = val-nums_[i];</span><br><span class="line">        nums_[i] = val;</span><br><span class="line">        <span class="keyword">while</span> (idx &lt;= maxidx_) &#123;</span><br><span class="line">            tree_[idx] += tem;</span><br><span class="line">            idx += (idx &amp; -idx);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算数组nums_从下标i到下标j的所有元素的和，闭区间</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getSum(j) - getSum(i<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 计算数组nums_从下标为0到下标为i的所有元素的和。</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> idx = i+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (idx &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            sum += tree_[idx];</span><br><span class="line">            idx -= (idx &amp; -idx);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> maxidx_;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; tree_;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; nums_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="树状数组与逆序对"><a href="#树状数组与逆序对" class="headerlink" title="树状数组与逆序对"></a>树状数组与逆序对</h1><p>待补充</p>
+<h1 id="区间增加的树状数组"><a href="#区间增加的树状数组" class="headerlink" title="区间增加的树状数组"></a>区间增加的树状数组</h1><p>在原数组上构建差分数组，再再查分数组上建立树状数组可以用于区间增加的操作。</p>
+<p>待补充</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="https://www.cnblogs.com/findview/archive/2019/08/01/11281628.html" target="_blank" rel="noopener">https://www.cnblogs.com/findview/archive/2019/08/01/11281628.html</a></p>
+<p><a href="https://www.youtube.com/watch?v=2SVLYsq5W8M" target="_blank" rel="noopener">https://www.youtube.com/watch?v=2SVLYsq5W8M</a></p>
+<p><a href="https://blog.csdn.net/L664675249/article/details/50157669" target="_blank" rel="noopener">https://blog.csdn.net/L664675249/article/details/50157669</a></p>
+<p><a href="https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/" target="_blank" rel="noopener">https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/</a></p>
+<p><a href="https://baike.baidu.com/item/树状数组" target="_blank" rel="noopener">https://baike.baidu.com/item/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84</a></p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://yandongl.com/2020/02/15/data-structure-ii-num-array/">http://yandongl.com/2020/02/15/data-structure-ii-num-array/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/数据结构进阶/">数据结构进阶</a>
+            <a href="/tags/树/">树</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2020/02/15/data-structure-ii-segment-tree/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">数据结构进阶（三）线段树</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    <a class="next" href="/2020/02/15/data-structure-ii-union-find-algorithm/">
+        <span class="next-text nav-default">数据结构进阶（一）并查集</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
