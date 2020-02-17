@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="图论（一）图论基础算法"/><meta name="keywords" content="图论, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/02/16/graph-1/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>图论（一）图论基础算法 - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">图论（一）图论基础算法
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-02-16
+        </span><span class="post-category">
+            <a href="/categories/数据结构与算法/">数据结构与算法</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最短路径"><span class="toc-text">最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单源最短路径"><span class="toc-text">单源最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra算法"><span class="toc-text">Dijkstra算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Ford算法"><span class="toc-text">Bellman-Ford算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意两点之间的最短路径"><span class="toc-text">任意两点之间的最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Floyd算法"><span class="toc-text">Floyd算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最小生成树"><span class="toc-text">最小生成树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kruskal算法"><span class="toc-text">Kruskal算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prim算法"><span class="toc-text">Prim算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#树的直径"><span class="toc-text">树的直径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#两次BFS求直径"><span class="toc-text">两次BFS求直径</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最近公共祖先"><span class="toc-text">最近公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#树上倍增法"><span class="toc-text">树上倍增法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拓扑排序"><span class="toc-text">拓扑排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#欧拉回路"><span class="toc-text">欧拉回路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二分图"><span class="toc-text">二分图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二分图的判定"><span class="toc-text">二分图的判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二分图的最大匹配"><span class="toc-text">二分图的最大匹配</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><p>图论中的一些基础算法，包括最短路、最小生成树、直径、最近公共祖先、拓扑排序和二分图等。<br><a id="more"></a></p>
+<h1 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h1><h2 id="单源最短路径"><a href="#单源最短路径" class="headerlink" title="单源最短路径"></a>单源最短路径</h2><p>给定一张有向图 $G = (V, E)$ ，$V$ 是点集，$E$ 是边集，$|V| = n$，$|E| = m$，节点以 $[1, n]$ 之间的连续整数编号，$(x, y, z)$ 描述一条从 $x$ 出发，到达 $y$，长度为 $z$ 的有向边。设 1 号节点为起点，求长度为 $n$ 的数组 $dist[1..n]$，其中$dist[i]$ 表示起点1到节点 $i$ 的最短路径长度。</p>
+<h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><p>Dijkstra算法基于贪心思想，且只适用于所有边的长度都是<strong>非负数</strong>的图。</p>
+<p>算法流程：</p>
+<ol>
+<li>初始化 $dist[1] = 0$，其余节点的 $dist$ 值为无穷大。</li>
+<li>找一个未被标记的、$dist[x]$  最小的节点 $x$，然后标记节点 $x$。</li>
+<li>扫描节点 $x$ 的所有出边 $(x, y, z)$，若 $dist[y] &gt; dist[x] + z$，则使用 $dist[x] + z$ 更新 $dist[y]$。</li>
+<li>重复上述 2-3 两个步骤，知道所有节点都被标记。</li>
+</ol>
+<p>初始化时 1号节点到自己的距离为0，然后从1号节点出发，1号节点的直接相邻节点中权值最小的一定是可以被确定的。按照这种思想更新所有节点即可求解单源最短路径问题。采用优先队列进行优化，每个节点在第一次出队列时得到最短路径，时间复杂度为 $O((m+n)logn)$ 。</p>
+<h3 id="Bellman-Ford算法"><a href="#Bellman-Ford算法" class="headerlink" title="Bellman-Ford算法"></a>Bellman-Ford算法</h3><p>给定一张有向图，若对于图中某一条边 $(x, y, z)$ ，有 $dist[y] \leq dist[x] + z$ 成立，则称该边满足<strong>三角不等式</strong>。若所有边都满足三角不等式，则 $dist[]$ 数组就是所求的最短路。</p>
+<p><strong>基本思想迭代优化</strong></p>
+<ol>
+<li>扫描所有边 $(x, y, z)$，若 $dist[y] &gt; dist[x] + z$，则用 $dist[x] + z$ 更新 $dist[y]$。</li>
+<li>重复上述步骤，直到没有更新发生。</li>
+</ol>
+<p>时间复杂度为$O(nm)$。</p>
+<p><strong>队列优化的Bellman-Ford算法（SPFA算法）</strong></p>
+<ol>
+<li>建立一个队列，最初队列只含有一个起点1。</li>
+<li>取出对头元素 $x$，扫描它的所有出边 $(x, y, z)$，若 $dist[y] &gt; dist[x] + z$，则使用 $dist[x] + z$ 更新$dist[y]$。同时，若 $y$ <strong>不在队列中</strong>，则把 $y$ 入队。</li>
+<li>重复上述步骤，直到队列为空。</li>
+</ol>
+<p>在随机图上运行效率 $O(km)$，$k$ 是一个很小的常数。在一些特殊构造的图上，可能退化为 $O(nm)$。</p>
+<p>Bellman-Ford 算法（SPFA算法）可以用来处理<strong>有负边存在的图</strong>。</p>
+<p><strong>注意：</strong>Dijkstra使用的是<strong>优先队列</strong>，SPFA使用的是<strong>普通的队列</strong>。</p>
+<h2 id="任意两点之间的最短路径"><a href="#任意两点之间的最短路径" class="headerlink" title="任意两点之间的最短路径"></a>任意两点之间的最短路径</h2><h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3><p>Floyd 算法的时间复杂度为 $O(n^3)$。</p>
+<p>设 $D[k, i, j]$ 表示经过 “经过若干个编号不超过 $k$ 的节点” 从 $i$ 到 $j$ 的最短路长度。该问题可划分为两个字问题，经过编号不超过 $k-1$ 的节点从i到j，或者节点 $i$ 经过节点 $k$ 到达节点 $j$。于是有转移方程：<br>$$<br>D[k, i, j] = min(D[k-1, i, j], \;D[k-1, i, k]+D[k-1, k, j])<br>$$<br>初始值为 $D[0, i, j] = A[i, j]$，假设 $A[i, j]$ 为邻接矩阵，表示节点 $i$ 与节点 $j$ 之间的边的长度。</p>
+<p>经过空间压缩的 Floyd 算法如下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> d[<span class="number">310</span>][<span class="number">310</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">memset</span>(d, <span class="number">0x3f</span>, <span class="keyword">sizeof</span>(d));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++i) &#123;</span><br><span class="line">        d[i][j] = a[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= n; ++k) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j) &#123;</span><br><span class="line">            d[i][j] = min(d[i][j], d[i][k] + d[k][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h1><h2 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h2><p>Kruskal 算法总是维护无向图的最小生成森林。在任意时刻，Kruskal 算法从剩余的边中选出一条权值最小的，并且两个端点属于森林中两颗不同的树（不连通）的边，把改边加入生成森林。节点连通性可用并查集维护。时间复杂度为 $O(mlogm)$。 // 感觉是否应该是 $O(mlogn)$。</p>
+<ol>
+<li>建立并查集，每个点为一个单独的集合。</li>
+<li>把所有边按权值从小到大排序，并依次扫描每条边 $(x, y, z)$。</li>
+<li>若 $x, y$ 属于同一集合（在一颗相同的树上）则忽略该边，继续查找下一条。</li>
+<li>否则，合并 $x,y$ 所在的集合，并把 $z$ 累加到答案中。</li>
+<li>所有边扫描完成后，第 4 步中处理过的边就构成最小生成树。</li>
+</ol>
+<h2 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h2><p>待更新</p>
+<h1 id="树的直径"><a href="#树的直径" class="headerlink" title="树的直径"></a>树的直径</h1><h2 id="两次BFS求直径"><a href="#两次BFS求直径" class="headerlink" title="两次BFS求直径"></a>两次BFS求直径</h2><ol>
+<li>从任意一个节点出发，通过 BFS 或 DFS 对树进行一次遍历，求出与出发点距离最远的节点，记为 $p$。（若有多个距离最远的点，则任选一个）。</li>
+<li>从节点 $p$ 出发，通过 BFS 或者 DFS 再进行一次遍历，求出与 $p$ 距离最远的节点，记为 $q$。</li>
+<li>从 $p$  到 $q$ 的路径就是树的一条直径。</li>
+</ol>
+<p>证明待补充。</p>
+<h1 id="最近公共祖先"><a href="#最近公共祖先" class="headerlink" title="最近公共祖先"></a>最近公共祖先</h1><h2 id="树上倍增法"><a href="#树上倍增法" class="headerlink" title="树上倍增法"></a>树上倍增法</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> head[MAX_N*<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> ver[MAX_N*<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> Next[MAX_N*<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> tot = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> d[MAX_N*<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> f[MAX_N][<span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    ver[++tot] = y;</span><br><span class="line">    Next[tot] = head[x];</span><br><span class="line">    head[x] = tot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f, <span class="number">0</span>, <span class="keyword">sizeof</span>(f));</span><br><span class="line">    <span class="built_in">memset</span>(d, <span class="number">0</span>, <span class="keyword">sizeof</span>(d));</span><br><span class="line">    q.push(<span class="number">1</span>);</span><br><span class="line">    d[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">        <span class="keyword">int</span> x = q.front();</span><br><span class="line">        q.pop();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = head[x]; i; i = Next[i]) &#123;</span><br><span class="line">            <span class="keyword">int</span> y = ver[i];</span><br><span class="line">            <span class="keyword">if</span> (d[y]) <span class="keyword">continue</span>;</span><br><span class="line">            d[y] = d[x] + <span class="number">1</span>;</span><br><span class="line">            f[y][<span class="number">0</span>] = x;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= t; ++j) &#123;</span><br><span class="line">                f[y][j] = f[f[y][j<span class="number">-1</span>]][j<span class="number">-1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            q.push(y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (d[x] &lt; d[y])</span><br><span class="line">        swap(x, y);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = t; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (d[f[x][i]] &gt;= d[y])</span><br><span class="line">            x = f[x][i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (x == y) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = t; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (f[x][i] != f[y][i]) &#123;</span><br><span class="line">            x = f[x][i];</span><br><span class="line">            y = f[y][i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[x][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><p><strong>拓扑排序（Topological Sorting）</strong>是一个<strong>有向无环图（DAG, Directed Acyclic Graph）</strong>的所有顶点的线性序列。</p>
+<p>给定一张<code>DAG</code>，对于该图中每两个顶点 $A, B$，若存在一条路径从 $A$ 到达 $B$，那么在拓扑排序中，顶点 $A$ 一定出现在顶点 $B$ 的前面。另外，在一张图的拓扑排序中，每个顶点出现且仅出现一次。</p>
+<p><strong>拓扑排序的思想</strong></p>
+<p>拓扑排序的思想：只需要不断选择图中入度为 0 的节点 $x$，将节点 $x$ 加入到拓扑序列中中，从将 $x$ 连向的点的入度减 1。直到 DAG 为空或者当前图中不存在入度为 0 的顶点为止。处理流程如下。</p>
+<ol>
+<li>建立空的拓扑序列 $A$。</li>
+<li>预处理所有点的入度 $deg[i]$，并把所有入度为 0 的点加入到<strong>队列</strong>中。</li>
+<li>队列中取出队头元素 $x$，将其加入到拓扑序列 $A$ 的末尾。</li>
+<li>对于从 $x$ 出发的每条边 $(x, y)$，把 $deg[y]$ 减 1。若减为 0，则把 $y$ 入队。</li>
+<li>重复 3-4 步，直到<strong>队列</strong>为空，此时，$A$ 就是要求得的拓扑序列。</li>
+</ol>
+<p>拓扑排序也可以用来<strong>检测有向图中是否有环</strong>，若最后得到的拓扑序列A的大小小于图中所有顶点的数量时，则表明该有向图是存在环的。</p>
+<h1 id="欧拉回路"><a href="#欧拉回路" class="headerlink" title="欧拉回路"></a>欧拉回路</h1><p>存在<strong>欧拉回路</strong>的图被称为<strong>欧拉图</strong>，其判定方式为当且仅当无向图连通，且每个点的<strong>度数都是偶数</strong>。</p>
+<h1 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h1><h2 id="二分图的判定"><a href="#二分图的判定" class="headerlink" title="二分图的判定"></a>二分图的判定</h2><p>二分图的判定一般使用采用染色法。尝试用黑白两种颜色标记图中的节点，当一个节点被标记后，它的所有相邻节点应该被标记与它相反的颜色。若标记过程中产生冲突，则说明途中存在奇环（长度为奇数的环），不是二分图。二分图染色一般基于深度优先遍历实现，时间复杂度为 $O(N+M)$。</p>
+<h2 id="二分图的最大匹配"><a href="#二分图的最大匹配" class="headerlink" title="二分图的最大匹配"></a>二分图的最大匹配</h2><p><strong>匈牙利算法（增广路算法）</strong></p>
+<p>尚不能通过官方解释来理解，只能通过<strong>“挪”</strong>的思想来理解。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 棋盘覆盖，有坏点</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE (106)</span></span><br><span class="line"><span class="keyword">bool</span> badPoint[SIZE][SIZE];</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> match[SIZE*SIZE];</span><br><span class="line"><span class="keyword">bool</span> visit[SIZE*SIZE];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; e[SIZE*SIZE];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dirs = &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">0</span>,<span class="number">-1</span>&#125;, &#123;<span class="number">-1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; e[x].size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">int</span> y = e[x][i];</span><br><span class="line">        <span class="keyword">if</span> (visit[y]) <span class="keyword">continue</span>;</span><br><span class="line">        visit[y] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (!match[y] || dfs(match[y])) &#123;</span><br><span class="line">            match[y] = x;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    freopen(<span class="string">"input.txt"</span>, <span class="string">"r"</span>, <span class="built_in">stdin</span>);</span><br><span class="line">    <span class="comment">// std::ios::sync_with_stdio(false);</span></span><br><span class="line">    <span class="comment">// std::cin.tie(0);</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="built_in">memset</span>(badPoint, <span class="number">0</span>, <span class="keyword">sizeof</span>(badPoint));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (m--) &#123;</span><br><span class="line">        <span class="keyword">int</span> x, y;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">        badPoint[x][y] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (badPoint[i][j]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dir: dirs) &#123;</span><br><span class="line">                <span class="keyword">int</span> x = i + dir[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">int</span> y = j + dir[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (x&lt;<span class="number">1</span>||x&gt;n||y&lt;<span class="number">1</span>||y&gt;n || badPoint[x][y]) <span class="keyword">continue</span>;</span><br><span class="line">                e[(i<span class="number">-1</span>)*n+j<span class="number">-1</span>].push_back((x<span class="number">-1</span>)*n+y<span class="number">-1</span>);</span><br><span class="line">                e[(x<span class="number">-1</span>)*n+y<span class="number">-1</span>].push_back((i<span class="number">-1</span>)*n+j<span class="number">-1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(match, <span class="number">0</span>, <span class="keyword">sizeof</span>(match));</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((i+j)&amp;<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="built_in">memset</span>(visit, <span class="number">0</span>, <span class="keyword">sizeof</span>(visit));</span><br><span class="line">                <span class="keyword">if</span> (dfs(i*n+j)) ans++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 车的摆放</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N (206)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> M (206)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m, t;</span><br><span class="line"><span class="keyword">bool</span> b[N][M];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; e[N+M];</span><br><span class="line"><span class="keyword">int</span> match[N*M];</span><br><span class="line"><span class="keyword">bool</span> visit[N*M];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;e[x].size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">int</span> y = e[x][i];</span><br><span class="line">        <span class="keyword">if</span> (visit[y]) <span class="keyword">continue</span>;</span><br><span class="line">        visit[y] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (!match[y] || dfs(match[y])) &#123;</span><br><span class="line">            match[y] = x;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// freopen("input.txt", "r", stdin);</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;n, &amp;m, &amp;t);</span><br><span class="line">    <span class="built_in">memset</span>(b, <span class="number">0</span>, <span class="keyword">sizeof</span>(b));</span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="keyword">int</span> x, y;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">        b[x][y] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;n; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (b[i+<span class="number">1</span>][j+<span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            e[i].push_back(n+j);</span><br><span class="line">            e[n+j].push_back(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &lt; n+m; ++i) &#123;</span><br><span class="line">        <span class="built_in">memset</span>(visit, <span class="number">0</span>, <span class="keyword">sizeof</span>(visit));</span><br><span class="line">        <span class="keyword">if</span> (dfs(i)) ans++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://yandongl.com/2020/02/16/graph-1/">http://yandongl.com/2020/02/16/graph-1/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/图论/">图论</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2020/02/17/leetcode-1335/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">leetcode-1335-Minimum Difficulty of a Job Schedule</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    <a class="next" href="/2020/02/16/leetcode-1354/">
+        <span class="next-text nav-default">leetcode-1354-Construct Target Array With Multiple Sums</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
