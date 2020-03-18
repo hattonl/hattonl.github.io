@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="leetcode-754-Reach a Number"/><meta name="keywords" content="Math, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/03/07/leetcode-754/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>leetcode-754-Reach a Number - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">leetcode-754-Reach a Number
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-03-07
+        </span><span class="post-category">
+            <a href="/categories/leetcode/">leetcode</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码1"><span class="toc-text">代码1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码2"><span class="toc-text">代码2</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>leetcode 754<br><a id="more"></a></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>You are standing at position <code>0</code> on an infinite number line. There is a goal at position <code>target</code>.</p>
+<p>On each move, you can either go left or right. During the <em>n</em>-th move (starting from 1), you take <em>n</em> steps.</p>
+<p>Return the minimum number of steps required to reach the destination.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: target = 3</span><br><span class="line">Output: 2</span><br><span class="line">Explanation:</span><br><span class="line">On the first move we step from 0 to 1.</span><br><span class="line">On the second step we step from 1 to 3.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: target = 2</span><br><span class="line">Output: 3</span><br><span class="line">Explanation:</span><br><span class="line">On the first move we step from 0 to 1.</span><br><span class="line">On the second move we step  from 1 to -1.</span><br><span class="line">On the third move we step from -1 to 2.</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<p><code>target</code> will be a non-zero integer in the range <code>[-10^9, 10^9]</code>.</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>这道题是一道数学问题，和算法问题仿佛关系不大。最初使用广度优先搜索和迭代深搜进行求解，但都超时了。回过头来在数据规模可以看出，这道题的时间复杂度应该是小于O(n)的，所以从O(logn)，O(sqrt(n))，O(1)三种时间复杂度中进行考虑。</p>
+<p>分析可知 target 和 -target 的具有相同的答案，因此我们只考虑 target 为正数的时候。使用贪心策略，从 0 走到target最快的方案当然是沿着正方向一直走，假设沿着正方向最少走k次才能超过或者等于target，则有<br>$$<br>1+2+…+k = target +d \;\;( 0 \leq d &lt; k)<br>$$</p>
+<ol>
+<li>若 d == 0，则 k就是最终的答案。</li>
+<li>若 d 是偶数，那么说明我们沿着正方向走k次已经超过了 target ，因此需要调整往回走。为了保证答案的最小化，最佳策略就是在 1，2，…，k 中找到其中一步 i 使其往负方向走，则总体向正方向前进的距离就会减少 2i，此时 i == d/2。最终答案依然是k。</li>
+<li>若d是奇数。这种情况下在 “1，2，…，k 中找到其中一步 i 使其往负方向走” 的方案就行不通了。因为无论选择那个 i，总体前进的距离的减少值总会是偶数。下面还要将 k 分奇偶进行讨论。<ol>
+<li>当 k 偶数时。再向正方向前进一步，则有 $ 1+2+..+k+(k+1) = target+d+(k+1) \;(0\leq d&lt;k)$ 此时 d+k+1 便士偶数，于是可以 “1，2，…，k，k+1 中找到其中一步 i 使其往负方向走”，此时 i == (d+k+1)/2。答案k+1。</li>
+<li>当k为奇数时。则向正方向前进一步也无法满足条件，因此我们，在走了k次的基础上先回推一步再向前一步，则有 $ 1+2+..+k-(k+1)+(k+2) = target+d+1) \;(0\leq d&lt;k)$ ，此时再在  “1，2，…，k 中找到其中一步 i 使其往负方向走”，此时 i == (d+1)/2。答案k+2。</li>
+</ol>
+</li>
+</ol>
+<h1 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// O(sqrt(n))</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reachNumber</span><span class="params">(<span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> t = <span class="built_in">abs</span>(target);</span><br><span class="line">        <span class="keyword">while</span> (sum &lt; t) &#123;</span><br><span class="line">            sum += ++k;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> d = sum - t;</span><br><span class="line">        <span class="keyword">if</span> ((d%<span class="number">2</span>) == <span class="number">0</span>) <span class="keyword">return</span> k;</span><br><span class="line">        <span class="keyword">return</span> k + <span class="number">1</span> + (k%<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// O(1)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reachNumber</span><span class="params">(<span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> t = <span class="built_in">abs</span>(target);</span><br><span class="line">        <span class="keyword">int</span> k = <span class="built_in">sqrt</span>(t*<span class="number">2</span>);   <span class="comment">// k^2 + k = 2t -&gt; k &lt; sqrt(2t)</span></span><br><span class="line">        sum = (<span class="number">1</span>+k)*k/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">while</span> (sum &lt; t) &#123; sum += ++k; &#125;</span><br><span class="line">        <span class="keyword">int</span> d = sum - t;</span><br><span class="line">        <span class="keyword">if</span> ((d%<span class="number">2</span>) == <span class="number">0</span>) <span class="keyword">return</span> k;</span><br><span class="line">        <span class="keyword">return</span> k + <span class="number">1</span> + (k%<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://yandongl.com/2020/03/07/leetcode-754/">http://yandongl.com/2020/03/07/leetcode-754/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/Math/">Math</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2020/03/09/leetcode-1375/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">leetcode-1375-Bulb Switcher III</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    <a class="next" href="/2020/03/06/leetcode-1349/">
+        <span class="next-text nav-default">leetcode-1349-Maximum Students Taking Exam</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

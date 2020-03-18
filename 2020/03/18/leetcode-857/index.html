@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="leetcode-857-Minimum Cost to Hire K Workers"/><meta name="keywords" content="Greedy, Heap, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/03/18/leetcode-857/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>leetcode-857-Minimum Cost to Hire K Workers - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">Home
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">Archives
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            Home
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            Archives
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            Tags
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            Categories
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            About
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">leetcode-857-Minimum Cost to Hire K Workers
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-03-18
+        </span><span class="post-category">
+            <a href="/categories/leetcode/">leetcode</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>leetcode 857<br><a id="more"></a></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>There are <code>N</code> workers. The <code>i</code>-th worker has a <code>quality[i]</code> and a minimum wage expectation <code>wage[i]</code>.</p>
+<p>Now we want to hire exactly <code>K</code> workers to form a <em>paid group</em>. When hiring a group of K workers, we must pay them according to the following rules:</p>
+<ol>
+<li>Every worker in the paid group should be paid in the ratio of their quality compared to other workers in the paid group.</li>
+<li>Every worker in the paid group must be paid at least their minimum wage expectation.</li>
+</ol>
+<p>Return the least amount of money needed to form a paid group satisfying the above conditions.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: quality = [10,20,5], wage = [70,50,30], K = 2</span><br><span class="line">Output: 105.00000</span><br><span class="line">Explanation: We pay 70 to 0-th worker and 35 to 2-th worker.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: quality = [3,1,10,10,1], wage = [4,8,2,2,7], K = 3</span><br><span class="line">Output: 30.66667</span><br><span class="line">Explanation: We pay 4 to 0-th worker, 13.33333 to 2-th and 3-th workers seperately.</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<ol>
+<li><code>1 &lt;= K &lt;= N &lt;= 10000</code>, where <code>N = quality.length = wage.length</code></li>
+<li><code>1 &lt;= quality[i] &lt;= 10000</code></li>
+<li><code>1 &lt;= wage[i] &lt;= 10000</code></li>
+<li>Answers within <code>10^-5</code> of the correct answer will be considered correct.</li>
+</ol>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>首先考虑，假设我们现在已经有了K个工人，那么一共应该给他们发多少工资呢？假设每个工人单位工作量所需要的工资为<code>（quality[i]\wage[i]）</code>，那么k个工人所需要支付的总的工资数就是<br>$$<br>\sum \limits_{i} quality[i]* \min \limits_{i} \{ quality[i] \div wage[i]\}<br>$$</p>
+<p>那么我们可以按照每个工人的每单位工作量所需要的工资数<code>（quality[i]\wage[i]）</code> 对工人进行从小到大的排序。然后依次尝试将每个工人加入到队伍中时，工人所需要支付的总的工资数的情况。若当前队伍人数已经大于等于K时，则从员队伍中取出quality最高的员工，再尝试将新员工加入到队伍中去。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">10e-6</span>;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">mincostToHireWorkers</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; quality, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; wage, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">double</span>&gt;&gt; workers;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; quality.size(); ++i) &#123;</span><br><span class="line">            workers.push_back(&#123;quality[i], (<span class="keyword">double</span>)wage[i]/quality[i]&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        sort(workers.begin(), workers.end(), [](</span><br><span class="line">            <span class="keyword">const</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">double</span>&gt;&amp;a, <span class="keyword">const</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">double</span>&gt; &amp;b) &#123;</span><br><span class="line">            <span class="keyword">return</span> a.second &lt; b.second;&#125;);</span><br><span class="line">        </span><br><span class="line">        priority_queue&lt;<span class="keyword">int</span>&gt; pq;</span><br><span class="line">        <span class="keyword">int</span> sumQuality = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> ans = <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> worker: workers) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pq.size() == K) &#123;</span><br><span class="line">                <span class="keyword">int</span> x = pq.top();</span><br><span class="line">                pq.pop();</span><br><span class="line">                sumQuality -= x;</span><br><span class="line">            &#125;</span><br><span class="line">            pq.push(worker.first);</span><br><span class="line">            sumQuality += worker.first;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (pq.size() == K) &#123;</span><br><span class="line">                <span class="keyword">double</span> curPaid = sumQuality*worker.second;</span><br><span class="line">                <span class="keyword">if</span> (ans &lt;= eps &amp;&amp; ans &gt;= -eps)</span><br><span class="line">                    ans = curPaid;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    ans = min(ans, curPaid);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://yandongl.com/2020/03/18/leetcode-857/">http://yandongl.com/2020/03/18/leetcode-857/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/Greedy/">Greedy</a>
+            <a href="/tags/Heap/">Heap</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2020/03/18/leetcode-484/">
+        <span class="next-text nav-default">leetcode-484-Find Permutation</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
