@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8"/>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="leetcode-903-Valid Permutations for DI Sequence"/><meta name="keywords" content="DP, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://yandongl.com/2020/04/03/leetcode-903/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>leetcode-903-Valid Permutations for DI Sequence - Hatton's Notes</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Hatton's Notes</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hatton's Notes</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/tags/">
+            标签
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            分类
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">leetcode-903-Valid Permutations for DI Sequence
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-04-03
+        </span><span class="post-category">
+            <a href="/categories/leetcode/">leetcode</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码1"><span class="toc-text">代码1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码2"><span class="toc-text">代码2</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>leetcode 903<br><a id="more"></a></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>We are given <code>S</code>, a length <code>n</code> string of characters from the set <code>{&#39;D&#39;, &#39;I&#39;}</code>. (These letters stand for “decreasing” and “increasing”.)</p>
+<p>A <em>valid permutation</em> is a permutation <code>P[0], P[1], ..., P[n]</code> of integers <code>{0, 1, ..., n}</code>, such that for all <code>i</code>:</p>
+<ul>
+<li>If <code>S[i] == &#39;D&#39;</code>, then <code>P[i] &gt; P[i+1]</code>, and;</li>
+<li>If <code>S[i] == &#39;I&#39;</code>, then <code>P[i] &lt; P[i+1]</code>.</li>
+</ul>
+<p>How many valid permutations are there? Since the answer may be large, <strong>return your answer modulo <code>10^9 + 7</code></strong>.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;DID&quot;</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: </span><br><span class="line">The 5 valid permutations of (0, 1, 2, 3) are:</span><br><span class="line">(1, 0, 3, 2)</span><br><span class="line">(2, 0, 3, 1)</span><br><span class="line">(2, 1, 3, 0)</span><br><span class="line">(3, 0, 2, 1)</span><br><span class="line">(3, 1, 2, 0)</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<ol>
+<li><code>1 &lt;= S.length &lt;= 200</code></li>
+<li><code>S</code> consists only of characters from the set <code>{&#39;D&#39;, &#39;I&#39;}</code>.</li>
+</ol>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>思路1:</p>
+<p> <code>dp[i][j]</code> 表示 “由 i+1 个数字组成且第 i+1 个数字（即序列中的最后一个数字）是剩余数字中（包括当前数字）中第 j+1 小的数字” 时的有效序列个数。比如 <code>dp[0][0]</code> 表示序列只有1个数字，且该数字是生育数字中最小的，那就只能是0，所以 <code>dp[0][0] == 1</code>。</p>
+<p>状态转移方程：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (S[i] == <span class="string">'D'</span>)    dp[i+<span class="number">1</span>][j] = sum(dp[i][k])    ( j &lt; k &lt;= n<span class="number">-1</span> )</span><br><span class="line"><span class="keyword">else</span>                dp[i+<span class="number">1</span>][j] = sum(dp[i][k])    ( <span class="number">0</span> &lt;= k &lt;= j )</span><br></pre></td></tr></table></figure>
+<p><code>S[i] == &#39;D&#39;</code> 表示下标为 <code>i+1</code> 的数要比下标为 <code>i</code> 的数小。也就是说第 <code>i+2</code> 个数要比第 <code>i+1</code> 个数小。则可以来确定 <code>dp[i+1][j]</code> 的值。<code>dp[i+1][j]</code> 表示第 <code>i+2</code> 个数是剩下没有选择的元素中（包括当前数字）第 <code>j</code> 小的。<code>dp[i+1][j]</code> 的值就决定于 <code>dp[i][k]</code> (k &gt; j)。同理，当 <code>S[i] == &#39;I&#39;</code> 时，表示下标为 <code>i+1</code> 的数要比下标为 <code>i</code> 的数大。<code>dp[i+1][j]</code> 的值就决定于 <code>dp[i][k]</code> (k &lt;= j) ，注意这里可以取等号。当 <code>k == j</code> 时，在处理第 <code>i+1</code> 个数时，所取的数是第 <code>j</code> 小个，那么当其取走之后，在处理第 <code>i+2</code> 个数时，所取的当前剩余元素的第 <code>j</code> 小个时，所取的值也一定大于第 <code>i+1</code> 个数所取的值。</p>
+<p>最终的答案在 <code>dp[n][0]</code></p>
+<p>思路2:</p>
+<p><code>dp[i][j]</code> 表示由范围 [0, i] 内的数字组成且最后一个数字为j的不同序列的个数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (S[i] == <span class="string">'D'</span>)    dp[i+<span class="number">1</span>][j] += dp[i][k]    ( j &lt;= k &lt;= i )</span><br><span class="line"><span class="keyword">else</span>                dp[i+<span class="number">1</span>][j] += dp[i][k]    ( <span class="number">0</span> &lt;= k &lt; j )</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.cnblogs.com/grandyang/p/11094525.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/11094525.html</a></p>
+<h1 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numPermsDISequence</span><span class="params">(<span class="built_in">string</span> S)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = S.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;&gt; dp(n+<span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;(n+<span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; ++j) dp[<span class="number">0</span>][j] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (S[i] == <span class="string">'D'</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">long</span> <span class="keyword">long</span> j = n<span class="number">-1</span>-i, tot = <span class="number">0</span>; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                    dp[i+<span class="number">1</span>][j] = (tot = (tot + dp[i][j+<span class="number">1</span>])%mod);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;  <span class="comment">// S[i] == 'I'</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">long</span> <span class="keyword">long</span> j = <span class="number">0</span>, tot = <span class="number">0</span>; j &lt; n - i; ++j) &#123;</span><br><span class="line">                    dp[i+<span class="number">1</span>][j] = (tot = (tot + dp[i][j])%mod);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numPermsDISequence</span><span class="params">(<span class="built_in">string</span> S)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = S.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;&gt; dp(n+<span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;(n+<span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (S[i] == <span class="string">'D'</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">long</span> <span class="keyword">long</span> j = i, tot = <span class="number">0</span>; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                    dp[i+<span class="number">1</span>][j] = (tot = (tot + dp[i][j])%mod);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;  <span class="comment">// S[i] == 'I'</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">long</span> <span class="keyword">long</span> j = <span class="number">1</span>, tot = <span class="number">0</span>; j &lt;= i+<span class="number">1</span>; ++j) &#123;</span><br><span class="line">                    dp[i+<span class="number">1</span>][j] = (tot = (tot + dp[i][j<span class="number">-1</span>])%mod);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; ++j) &#123;</span><br><span class="line">            ans += dp[n][j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans%mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yandongl.com">Hatton.Liu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://yandongl.com/2020/04/03/leetcode-903/">http://yandongl.com/2020/04/03/leetcode-903/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/DP/">DP</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2020/04/04/leetcode-847/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">leetcode-847-Shortest Path Visiting All Nodes</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2020/04/02/leetcode-920/">
+        <span class="next-text nav-default">leetcode-920-Number of Music Playlists</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/hattonl" class="iconfont icon-github" title="github"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2017 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hatton.Liu</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'hattonl/hattonl.github.io')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
