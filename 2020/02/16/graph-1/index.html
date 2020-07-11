@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 <meta name="description" content="图论（一）图论基础算法"/><meta name="keywords" content="图论, Hatton's Notes" /><link rel="alternate" href="/default" title="Hatton's Notes"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
-<link rel="canonical" href="http://yandongl.com/2020/02/16/graph-1/"/>
+<link rel="canonical" href="http://hattonl.github.io/2020/02/16/graph-1/"/>
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
     MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
@@ -56,19 +56,19 @@
 
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list"><a href="/">
-        <li class="mobile-menu-item">首页
+        <li class="mobile-menu-item">Home
           </li>
       </a><a href="/archives/">
-        <li class="mobile-menu-item">归档
+        <li class="mobile-menu-item">Archives
           </li>
       </a><a href="/tags/">
-        <li class="mobile-menu-item">标签
+        <li class="mobile-menu-item">Tags
           </li>
       </a><a href="/categories/">
-        <li class="mobile-menu-item">分类
+        <li class="mobile-menu-item">Categories
           </li>
       </a><a href="/about/">
-        <li class="mobile-menu-item">关于
+        <li class="mobile-menu-item">About
           </li>
       </a></ul>
 </nav>
@@ -79,27 +79,27 @@
 
 <nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
           <a class="menu-item-link" href="/">
-            首页
+            Home
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/archives/">
-            归档
+            Archives
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/tags/">
-            标签
+            Tags
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/categories/">
-            分类
+            Categories
             </a>
         </li>
       <li class="menu-item">
           <a class="menu-item-link" href="/about/">
-            关于
+            About
             </a>
         </li>
       </ul></nav>
@@ -122,7 +122,7 @@
     </header>
 
     <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
+    <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最短路径"><span class="toc-text">最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单源最短路径"><span class="toc-text">单源最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra算法"><span class="toc-text">Dijkstra算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Ford算法"><span class="toc-text">Bellman-Ford算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意两点之间的最短路径"><span class="toc-text">任意两点之间的最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Floyd算法"><span class="toc-text">Floyd算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最小生成树"><span class="toc-text">最小生成树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kruskal算法"><span class="toc-text">Kruskal算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prim算法"><span class="toc-text">Prim算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#树的直径"><span class="toc-text">树的直径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#两次BFS求直径"><span class="toc-text">两次BFS求直径</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最近公共祖先"><span class="toc-text">最近公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#树上倍增法"><span class="toc-text">树上倍增法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拓扑排序"><span class="toc-text">拓扑排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#欧拉回路"><span class="toc-text">欧拉回路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二分图"><span class="toc-text">二分图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二分图的判定"><span class="toc-text">二分图的判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二分图的最大匹配"><span class="toc-text">二分图的最大匹配</span></a></li></ol></li></ol>
     </div>
@@ -211,15 +211,15 @@
       </div>
       <div class="post-copyright">
     <p class="copyright-item">
-      <span>原文作者: </span>
-      <a href="http://yandongl.com">Hatton.Liu</a>
+      <span>Author: </span>
+      <a href="http://hattonl.github.io">Hatton.Liu</a>
     </p>
     <p class="copyright-item">
-      <span>原文链接: </span>
-      <a href="http://yandongl.com/2020/02/16/graph-1/">http://yandongl.com/2020/02/16/graph-1/</a>
+      <span>Link: </span>
+      <a href="http://hattonl.github.io/2020/02/16/graph-1/">http://hattonl.github.io/2020/02/16/graph-1/</a>
     </p>
     <p class="copyright-item">
-      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+      <span>License: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
   </div>
       <footer class="post-footer">
@@ -230,11 +230,11 @@
         <nav class="post-nav"><a class="prev" href="/2020/02/17/leetcode-1335/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text nav-default">leetcode-1335-Minimum Difficulty of a Job Schedule</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+        <span class="prev-text nav-mobile">Prev</span>
       </a>
     <a class="next" href="/2020/02/16/leetcode-1354/">
         <span class="next-text nav-default">leetcode-1354-Construct Target Array With Multiple Sums</span>
-        <span class="prev-text nav-mobile">下一篇</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     </nav></footer>
@@ -247,11 +247,11 @@
         <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
     </div><div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
